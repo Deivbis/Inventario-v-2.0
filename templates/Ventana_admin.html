@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inventary - Panel Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="{{url_for('static',filename='img/Inventory.png') }}"
+      type="image/png"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/dashboard.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="dashboard-container" id="dashboard">
+      <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú">
+        <div class="hamburger-icon">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </button>
+
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <img
+            src="{{ url_for('static', filename='img/Inventory.png') }}"
+            alt="Inventary Logo"
+            class="sidebar-logo"
+          />
+          <h2>Inventary</h2>
+        </div>
+        <nav class="sidebar-menu">
+          <ul>
+            <li class="has-submenu">
+              <a href="#" aria-expanded="false"
+                ><i class="fas fa-box-open"></i>
+                <span>Gestión de Productos</span>
+                <i class="fas fa-chevron-down arrow"></i
+              ></a>
+              <ul class="submenu">
+                <li>
+                  <a href="{{ url_for('productos.productos', modo='solo_lectura') }}">Ver Productos</a>
+                </li>
+                <li>
+                  <a href="{{ url_for('productos.productos', modo='gestion') }}">Gestionar Productos</a>
+                </li>
+                <li>
+                <li>
+                <li>
+                <li>
+                  <a href="{{url_for('proveedor.lista_proveedores') }}"
+                    >Proveedores</a
+                  >
+                </li>
+                <li>
+                  <a href="{{url_for('categoria.lista_Categoria')}}">Categorías</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="{{ url_for('compra.compra') }}"
+                ><i class="fas fa-cash-register"></i>
+                <span>Compra de producto</span></a
+              >
+            </li>
+            <li class="has-submenu">
+              <a href="#" aria-expanded="false"
+                ><i class="fas fa-users"></i> <span>Gestión de Clientes</span>
+                <i class="fas fa-chevron-down arrow"></i
+              ></a>
+              <ul class="submenu">
+                <li>
+                  <a href="{{ url_for('cliente.lista_cliente') }}"
+                    >Lista de Clientes</a
+                  >
+                </li>
+                <li>
+                  <a href="{{ url_for('cliente.agregar_cliente') }}"
+                    >Agregar Cliente</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="has-submenu">
+              <a href="#" aria-expanded="false"
+                ><i class="fas fa-box-open"></i
+                ><span>Gestión de Usuarios y Roles</span>
+                <i class="fas fa-chevron-down arrow"></i
+              ></a>
+              <ul class="submenu">
+                <li>
+                  <a href="{{ url_for('usuarios.lista_usuarios') }}">Usuarios</a>
+                </li>
+                <li><a href="{{ url_for('roles.lista_roles') }}"> Roles</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="{{ url_for('ventas.vender') }}"
+                ><i class="fas fa-cash-register"></i>
+                <span>Realizar Venta</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('movimiento.lista_movimientos') }}"
+                ><i class="fas fa-cash-register"></i>
+                <span>Revisar Movimientos</span></a
+              >
+            </li>
+            <li class="has-submenu">
+              <a href="#" aria-expanded="false"
+                ><i class="fas fa-box-open"></i
+                ><span>Facturas y Reportes</span>
+                <i class="fas fa-chevron-down arrow"></i
+              ></a>
+              <ul class="submenu">
+                <li><a href="{{ url_for('factura.facturas') }}">Facturas</a></li>
+                <li><a href="{{ url_for('reporte.reportes') }}"> Reportes</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="{{ url_for('perfil.mi_perfil') }}"
+                ><i class="fas fa-user-circle"></i> <span>Mi Perfil</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('logout.logout') }}"
+                ><i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar Sesión</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <section class="content">
+          <div class="header-flex">
+            <h2 class="resumen">Resumen del Sistema</h2>
+            <h1 class="Bienvenida">
+              Bienvenido, {{ user_display_name }}
+              <span class="user-role admin">{{ user_role_name }}</span>
+            </h1>
+          </div>
+          <p>
+            Aquí puedes gestionar productos, clientes y realizar ventas en
+            tiempo real.
+          </p>
+          <div class="summary-cards">
+            <div class="card">
+              <h3>Productos Totales</h3>
+              <p>{{ stats.total_productos }}</p>
+            </div>
+            <div class="card">
+              <h3>Clientes Activos</h3>
+              <p>{{ stats.total_clientes }}</p>
+            </div>
+            <div class="card">
+              <h3>Ventas Registradas</h3>
+              <p>{{ stats.total_ventas }}</p>
+            </div>
+            <div class="card">
+              <h3>Ingresos Totales</h3>
+              <p>${{ "%.2f"|format(stats.ingresos_totales) }}</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="statistics-section">
+          <h2>Estadísticas del Sistema</h2>
+          <div class="charts-container">
+            <div class="chart-card">
+              <h3>Ventas por Mes (Últimos 6 Meses)</h3>
+              <canvas id="salesChart"></canvas>
+            </div>
+            <div class="chart-card">
+              <h3>Productos por Categoría</h3>
+              <canvas id="categoryChart"></canvas>
+            </div>
+            <div class="chart-card stockbajo">
+              <h3>Productos con Bajo Stock</h3>
+              <ul id="lowStockList">
+                {% for product in stats.low_stock_products %}
+                  <li>
+                    {{ product['codigo'] }}:{{ product['nombre'] }}: {{ product['stock'] }} en stock
+                    (mínimo: {{ product['minimo'] }})
+                  </li>
+                {% else %}
+                  <li>No hay productos con bajo stock.</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          &copy; 2025 Inventary. Todos los derechos reservados.
+        </footer>
+      </main>
+    </div>
+
+    <script type="text/javascript">
+      const salesLabels = {{ stats.sales_by_month.keys() | list | tojson | safe }};
+      const salesData = {{ stats.sales_by_month.values() | list | tojson | safe }};
+      const categoryLabels = {{ stats.products_by_category_labels | tojson | safe }};
+      const categoryData = {{ stats.products_by_category_data | tojson | safe }};
+    </script>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

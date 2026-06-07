@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory - Registro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/registro.css') }}">
+    <link rel="icon" href="{{url_for('static',filename='img/Inventory.png') }}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Crea tu Cuenta</h1>
+        <p class="slogan">Únete a Inventory en segundos.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="message-container">
+            {% for category, message in messages %}
+                {% if category == 'danger' %}
+                <div class="alert alert-danger">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" placeholder="Tu apellido" required>
+            </div>
+
+            <div class="form-group">
+                <label for="correo">Correo electrónico:</label>
+                <input type="email" id="correo" name="correo" placeholder="ejemplo@dominio.com" required>
+            </div>
+
+            {# ELIMINADO: Campo de Usuario #}
+
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="Ej: 3001234567" required pattern="[0-9]{10}" title="Por favor, ingresa un número de teléfono válido de 10 dígitos">
+            </div>
+
+            <div class="form-group password-field">
+                <label for="contraseña">Contraseña:</label>
+                <input
+                    type="password"
+                    id="contraseña"
+                    name="contraseña"
+                    placeholder="Mín. 8 caracteres"
+                    required
+                    minlength="8"
+                    maxlength="20"
+                    title="La contraseña debe tener entre 8 y 20 caracteres."
+                >
+                <span class="toggle-password" onclick="togglePasswordVisibility('contraseña')">
+                    <i class="fa-solid fa-eye"></i>
+                </span>
+                <div class="password-strength"></div>
+            </div>
+
+            <div class="form-group password-field">
+                <label for="confirmar_contraseña">Confirmar contraseña:</label>
+                <input
+                    type="password"
+                    id="confirmar_contraseña"
+                    name="confirmar_contraseña"
+                    placeholder="Repite tu contraseña"
+                    required
+                    minlength="8"
+                    maxlength="20"
+                    title="La contraseña debe tener entre 8 y 20 caracteres."
+                >
+                <span class="toggle-password" onclick="togglePasswordVisibility('confirmar_contraseña')">
+                    <i class="fa-solid fa-eye"></i>
+                </span>
+                <div class="password-match-feedback"></div>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" id="terminos" name="terminos" required>
+                <label for="terminos">Acepto los <a href="/terminos-y-condiciones" target="_blank" rel="noopener noreferrer">términos y condiciones</a></label>
+            </div>
+
+            <input type="submit" value="Registrarse">
+
+            <div class="links-group">
+                <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/registro.js') }}"></script>
+</body>
+</html>

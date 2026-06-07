@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Movimientos{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Movimientos de Inventario</h1>
+    <p class="subheading">Consulta Movimientos</p>
+</div>
+
+    <div class="filtro-container">
+        <!-- Filtro por tipo -->
+        <div class="filtro-group">
+            <label for="filtro-tipo">Filtrar por tipo:</label>
+            <select id="filtro-tipo">
+            <option value="">Todos</option>
+            <option value="entrada">Entrada</option>
+            <option value="salida">Salida</option>
+            </select>
+        </div>
+            <!-- Filtro por producto -->
+        <div class="filtro-group">
+            <label for="filtro-producto">Buscar por producto:</label>
+            <input type="text" id="filtro-producto" placeholder="Nombre del producto" />
+        </div>
+        <!-- Filtro por motivo -->
+        <div class="filtro-group">
+            <label for="filtro-motivo">Filtrar por motivo:</label>
+            <select id="filtro-motivo">
+            <option value="">Todos</option>
+            <option value="compra">Compra</option>
+            <option value="venta">Venta</option>
+            </select>
+        </div>
+    </div>
+
+<!-- Tabla -->
+<div class="content">
+    <h2>Lista de Movimientos</h2>
+    <div class="table-responsive" style="overflow-x: auto;">
+        <table class="table table-striped" style="width: 100%; border-collapse: collapse; text-align: center;">
+            <thead style="background-color: var(--color-primary); color: var(--color-white);">
+                <tr>
+                    <th style="padding: 12px;">ID</th>
+                    <th style="padding: 12px;">Tipo</th>
+                    <th style="padding: 12px;">Producto</th>
+                    <th style="padding: 12px;">Cantidad</th>
+                    <th style="padding: 12px;">Motivo</th>
+                    <th style="padding: 12px;">Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for movimiento in movimientos %}
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;">{{ movimiento.id }}</td>
+                    <td style="padding: 10px;">{{ movimiento.tipo }}</td>
+                    <td style="padding: 10px;">{{ productos[movimiento.id_producto] }}</td>
+                    <td style="padding: 10px;">{{ movimiento.cantidad }}</td>
+                    <td style="padding: 10px;">{{ movimiento.motivo }}</td>
+                    <td style="padding: 10px;">{{ movimiento.fecha.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" style="padding: 15px; color: var(--color-secondary); text-align: center;">No hay movimientos registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Incluir el JS de filtrado -->
+<script src="{{ url_for('static', filename='js/filtro_movimientos.js') }}"></script>
+{% endblock %}

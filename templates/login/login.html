@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/login.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="{{url_for('static',filename='img/Inventory.png') }}"
+      type="image/png"
+    />
+    <title>Inventary - Login</title>
+  </head>
+  <body>
+    <form method="post" class="contenedor">
+      <h1>Inicio de sesión</h1>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            {% if category == 'error' %}
+              <div class="alert alert-danger">{{ message }}</div>
+            {% elif category == 'login' %}
+              <div class="alert alert-success">{{ message }}</div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <div class="form-group">
+        <label for="correo">Correo Electrónico:</label>
+        <input
+          type="email"
+          name="correo" 
+          title="Ingrese su correo electrónico"
+          placeholder="Ingrese su correo electrónico"
+          required
+        />
+      </div>
+
+      <div class="form-group password-field">
+        <label for="contraseña">Contraseña:</label>
+        <input
+          type="password"
+          id="contraseña"
+          name="contraseña"
+          title="Ingrese su contraseña"
+          placeholder="Ingrese su contraseña"
+          required
+        />
+        <span
+          class="toggle-password"
+          onclick="togglePasswordVisibility('contraseña')"
+        >
+          <i class="fa-solid fa-eye"></i>
+        </span>
+      </div>
+
+      <input type="submit" value="Ingresar" />
+
+      <div class="links-group">
+        <a href="{{url_for('recuperar.recuperar_contraseña')}}"
+          >¿Olvidaste tu contraseña?</a
+        >
+        <p>¿No tienes cuenta?</p>
+        <a href="{{url_for('registrarse.registrarse')}}">Regístrate aquí</a><br />
+        <a href="{{url_for('inicio.inicio') }}">Volver al inicio</a>
+      </div>
+    </form>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+  </body>
+</html>

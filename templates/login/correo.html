@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static',filename='img/Inventory.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recuperar.css') }}">
+    <title>Inventary - Recuperar</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Enviar código por email</h2>
+
+        <form id="emailCodeForm" method="POST"  action="/recuperar-contraseña">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    {% if category == 'errorCodigo' %}
+                        <div class="alert alert-danger">{{ message }}</div>
+                    {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <input type="email" name="email" placeholder="Ingresa tu correo" required />
+            <button type="submit">Validar código</button>
+            <p id="formError" class="error">Correo o código incorrecto</p>
+        </form>
+    </div>
+</body>
+</html>

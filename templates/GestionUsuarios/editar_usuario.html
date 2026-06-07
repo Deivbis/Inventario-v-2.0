@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static',filename='img/Inventory.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/usuario.css') }}">
+    <title>Editar Usuario</title>
+</head>
+<body>
+  <header>
+        <button class="btn-volver" onclick="window.history.back()">←</button>
+        <div class="titulo">Editar Usuario: {{ usuario.usuario }}</div>
+  </header>
+  <main>
+    <div class="form-container">
+        <!-- Mensajes flash de errorUsuario -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+            {% for category, message in messages %}
+                {% if category == 'errorUsuario' %}
+                <div class="alert alert-danger">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+        <form method="POST">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ usuario.nombre }}" required>
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" value="{{ usuario.apellido }}" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" class="form-control" id="telefono" name="telefono" value="{{ usuario.telefono }}">
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" class="form-control" id="correo" name="correo" value="{{ usuario.correo }}" required>
+            </div>
+            <div class="form-group">
+                <label for="contraseña">Nueva Contraseña (dejar en blanco para no cambiar):</label>
+                <input type="password" class="form-control" id="contraseña" name="contraseña">
+            </div>
+            <div class="form-group">
+                <label for="estado">Estado:</label>
+                <select class="seleccionar" id="estado" name="estado">
+                    <option value="Activo" {% if usuario.estado == 'Activo' %}selected{% endif %}>Activo</option>
+                    <option value="Inactivo" {% if usuario.estado == 'Inactivo' %}selected{% endif %}>Inactivo</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="id_rol">Rol:</label>
+                <select class="seleccionar" id="id_rol" name="id_rol" required>
+                    {% for rol in roles %}
+                        <option value="{{ rol.id }}" {% if usuario.id_rol == rol.id %}selected{% endif %}>{{ rol.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="boton">
+            <button type="submit" class="btn-guardar">Guardar Cambios</button>
+            </div>
+            <div class="boton">
+            <a href="{{ url_for('usuarios.lista_usuarios') }}" class="btn-cancelar">Cancelar</a>
+            </div>
+        </form>
+    </div>
+  </main>
+
+</body>
+</html>

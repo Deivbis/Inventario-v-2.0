@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventary - Gestion de Usuarios</title>
+    <link rel="icon" href="{{url_for('static',filename='img/Inventory.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/usuario.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('dashboard.dashboard') }}" class="btn-volver">←</a>
+        <div class="titulo">Lista de Usuarios</div>
+    </header>
+    <main>
+      <!-- Mensajes flash -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-messages">
+            {% for category, message in messages %}
+              {% if category == 'usuario' %}
+                <div class="alert alert-success">{{ message }}</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      <div class="form-group busqueda">
+            <label for="busqueda">Buscar Usuario</label>
+            <input class="nombre" type="text" id="busquedaProducto" onkeyup="filtrarUsuarios()" placeholder="Buscar Usuario...">
+
+            <select id="filtrorol" onchange="filtrarUsuarios()">
+                <option value="">Todos los roles</option>
+                {% for r in rol %}
+                    <option value="{{ r.nombre }}">{{ r.nombre }}</option>
+                {% endfor %}
+            </select>
+            <select id="filtroestado" onchange="filtrarUsuarios()">
+                <option value="">Todos los estados</option>
+                {% for estado in estados %}
+                    <option value="{{ estado }}">{{ estado }}</option>
+                {% endfor %}
+            </select>
+      </div>
+      <div class="tabla-container">
+          <table id="tablaUsuarios">
+              <thead>
+                  <tr>
+                      <th class="centrado">ID</th>
+                      <th class="centrado">Usuario</th>
+                      <th class="centrado">Nombre</th>
+                      <th class="centrado">Apellido</th>
+                      <th class="centrado">Teléfono</th>
+                      <th class="centrado">Correo</th>
+                      <th class="centrado">Rol</th>
+                      <th class="centrado">Estado</th>
+                      <th class="centrado">Acciones</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for usuario in usuarios %}
+                  <tr>
+                      <td class="centrado">{{ usuario.id }}</td>
+                      <td class="centrado">{{ usuario.usuario }}</td>
+                      <td class="centrado">{{ usuario.nombre }}</td>
+                      <td class="centrado">{{ usuario.apellido }}</td>
+                      <td class="centrado">{{ usuario.telefono }}</td>
+                      <td class="centrado">{{ usuario.correo }}</td>
+                      <td class="centrado">{{ usuario.rol.nombre if usuario.rol else 'N/A' }}</td>
+                      <td class="centrado">{{ usuario.estado }}</td>
+                      <td class="centrado">
+                        <a href="{{ url_for('usuarios.editar_usuario', id=usuario.id) }}" class="btn-editar centrado" title="Editar">
+                          <img src="{{ url_for('static', filename='img/editar.png') }}" alt="Editar" width="30" height="30" class="centrado">
+                        </a>
+
+                        {% if usuario.estado == 'Activo' %}
+                          <a href="{{ url_for('usuarios.eliminar_usuario', id=usuario.id) }}" class="btn-eliminar centrado" title="Eliminar"
+                            onclick="return confirm('¿Estás seguro que deseas eliminar este usuario?');">
+                            <img src="{{ url_for('static', filename='img/borrar.png') }}" alt="Eliminar" width="30" height="30" class="centrado">
+                          </a>
+                        {% else %}
+                          <a href="{{ url_for('usuarios.eliminar_usuario', id=usuario.id) }}" class="btn-activar centrado" title="Activar"
+                            onclick="return confirm('¿Estás seguro que deseas activar este usuario?');">
+                            <img src="{{ url_for('static', filename='img/agregar.png') }}" alt="Activar" width="30" height="30" class="centrado">
+                          </a>
+                        {% endif %}
+                      </td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+      <div class="agregar-usuario-container">
+          <a href="{{ url_for('usuarios.crear_usuario') }}" class="btn-agregar-usuario">+ Crear Usuario</a>
+      </div>
+   </main>
+  <footer>
+    © 2025 Inventary. Todos los derechos reservados.
+  </footer>
+  <script src="{{ url_for('static', filename='js/filtros.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventary - Agregar Categoría</title>
+  <link rel="icon" href="{{url_for('static', filename='img/Inventory.png')}}" type="image/png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/categoria.css') }}">
+</head>
+<body>
+
+  <header>
+    <button class="btn-volver" onclick="window.history.back()">←</button>
+    <div class="titulo">Agregar Nueva Categoría</div>
+  </header>
+
+  <main>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-messages">
+            {% for category, message in messages %}
+              {% if category == 'aggCategoria' %}
+                <div class="alert alert-danger">{{ message }}</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+    <div class="form-container">
+      <form method="POST">
+        <!-- Campo: Nombre de la categoría -->
+        <div class="form-group">
+          <label for="nombre">Nombre de la Categoría:</label>
+          <input 
+            type="text" 
+            id="nombre" 
+            name="nombre" 
+            placeholder="Ej: Papelería, Electrónica..." 
+            required 
+            maxlength="100" 
+            autocomplete="off"
+          >
+        </div>
+
+        <!-- Campo: Descripción -->
+        <div class="form-group">
+          <label for="descripcion">Descripción:</label>
+          <textarea 
+            id="descripcion" 
+            name="descripcion" 
+            rows="4" 
+            placeholder="Breve descripción de la categoría..." 
+            maxlength="300"
+          ></textarea>
+        </div>
+
+        <!-- Botones -->
+        <div class="boton">
+          <button type="submit" class="btn-guardar">Guardar Categoría</button>
+        </div>
+        <div class="boton">
+          <a href="{{ url_for('categoria.lista_Categoria') }}" class="btn-cancelar">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Inventary. Todos los derechos reservados.
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventary - Agregar Proveedor</title>
+  <link rel="icon" href="{{url_for('static', filename='img/Inventory.png')}}" type="image/png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/categoria.css') }}">
+</head>
+<body>
+
+  <header>
+    <button class="btn-volver" onclick="window.history.back()">←</button>
+    <div class="titulo">Agregar Nuevo Proveedor</div>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <form method="POST">
+        <!-- Nombre -->
+        <div class="form-group">
+          <label for="nombre">Nombre del proveedor:</label>
+          <input type="text" id="nombre" name="nombre" required placeholder="Ej: Distribuidora ACME">
+        </div>
+
+        <!-- Teléfono -->
+        <div class="form-group">
+          <label for="telefono">Teléfono:</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="Ej: 3001234567">
+        </div>
+
+        <!-- Dirección -->
+        <div class="form-group">
+          <label for="direccion">Dirección:</label>
+          <input type="text" id="direccion" name="direccion" placeholder="Ej: Calle 45 #67-89, Medellín">
+        </div>
+
+        <!-- Correo -->
+        <div class="form-group">
+          <label for="correo">Correo electrónico:</label>
+          <input type="email" id="correo" name="correo" placeholder="Ej: proveedor@empresa.com">
+        </div>
+
+        <!-- Botones -->
+        <div class="boton">
+          <button type="submit" class="btn-guardar">Guardar Proveedor</button>
+        </div>
+        <div class="boton">
+          <a href="{{ url_for('proveedor.lista_proveedores') }}" class="btn-cancelar">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Inventary. Todos los derechos reservados.
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="{{url_for('static',filename='img/Inventory.png') }}"
+      type="image/png"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/categoria.css') }}"
+    />
+    <title>Inventary - Lista de Proovedores</title>
+  </head>
+  <body>
+    <header>
+      <a href="{{ url_for('dashboard.dashboard') }}" class="btn-volver">←</a>
+      <div class="titulo">Lista de Proovedores</div>
+    </header>
+
+    <main>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-messages">
+            {% for category, message in messages %}
+              {% if category == 'proveedor' %}
+                <div class="alert alert-success">{{ message }}</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      <div class="form-group busqueda">
+        <label for="busqueda">Buscar por nombre:</label>
+        <input
+          type="text"
+          id="busqueda"
+          placeholder="Escribe un nombre..."
+          onkeyup="filtrarProvedor()"
+        />
+      </div>
+      <div class="tabla-container">
+        <table id="tablaProveedores">
+          <thead>
+            <tr>
+              <th class="centrado">ID</th>
+              <th class="centrado">Nombre</th>
+              <th class="centrado">Telefono</th>
+              <th class="centrado">Direccion</th>
+              <th class="centrado">Correo</th>
+              <th class="centrado">fecha de Registro</th>
+              <th class="centrado">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for proovedor in proovedores %}
+            <tr>
+              <td class="centrado">{{ proovedor.id }}</td>
+              <td class="centrado">{{ proovedor.nombre }}</td>
+              <td class="centrado">{{ proovedor.telefono }}</td>
+              <td class="centrado">{{ proovedor.direccion }}</td>
+              <td class="centrado">{{ proovedor.correo }}</td>
+              <td class="centrado">{{ proovedor.fecha_registro }}</td>
+              <td>
+                <a
+                  href="{{ url_for('proveedor.editar_proovedor', id=proovedor.id) }}"
+                  class="btn-editar centrado"
+                  title="Editar"
+                >
+                  <img
+                    src="{{ url_for('static', filename='img/editar.png') }}"
+                    alt="Editar"
+                    width="30"
+                    height="30"
+                    class="centrado"
+                  />
+                </a>
+                <a
+                  href="{{ url_for('proveedor.eliminar_proovedor', id=proovedor.id) }}"
+                  class="btn-eliminar centrado"
+                  title="Eliminar"
+                  onclick="return confirm('¿Estás seguro que deseas eliminar este proveedor?');"
+                >
+                  <img
+                    src="{{ url_for('static', filename='img/borrar.png') }}"
+                    alt="Eliminar"
+                    width="30"
+                    height="30"
+                    class="centrado"
+                  />
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="agregar-categoria-container">
+        <a
+          href="{{ url_for('proveedor.agregar_proovedor') }}"
+          class="btn-agregar-categoria"
+          >+ Agregar Proveedor</a
+        >
+      </div>
+    </main>
+
+    <footer>© 2025 Inventary. Todos los derechos reservados.</footer>
+    <script src="{{ url_for('static', filename='js/filtros.js') }}"></script>
+  </body>
+</html>

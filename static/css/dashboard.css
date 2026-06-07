@@ -1,0 +1,1108 @@
+:root {
+    --color-primary: #007bff;
+    --color-secondary: #6c757d;
+    --color-white: #ffffff;
+    --color-blue-dark: #0d47a1;
+    --color-light-blue: #f0f4f8;
+    --color-text-dark: #333333;
+    --color-text-light: #f8f9fa;
+    --sidebar-width: 270px;
+    --border-radius-card: 10px;
+    --box-shadow-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --transition-speed: 0.3s ease-out;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-light-blue);
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    transition: margin-left var(--transition-speed);
+}
+
+.menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+.menu-toggle:hover {
+    background-color: var(--color-blue-dark);
+    transform: scale(1.05);
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: 20px 0;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.25);
+    transform: translateX(-100%);
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-container.menu-open .sidebar {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    margin-bottom: 15px;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-header h2 {
+    font-size: 1.8em;
+    color: var(--color-white);
+    margin: 15px 0 0 0;
+    font-weight: 700;
+}
+
+.sidebar-logo {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.sidebar-menu {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    margin-bottom: 8px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    /* Cambié justify-content a flex-start para alinear todo a la izquierda */
+    justify-content: flex-start;
+    gap: 12px;
+    color: var(--color-text-light);
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    transition: background-color var(--transition-speed), transform 0.2s ease;
+    font-size: 1.05em;
+}
+
+.sidebar-menu a:hover {
+    background-color: var(--color-blue-dark);
+    transform: translateX(5px);
+}
+
+.sidebar-menu a i {
+    /* Ancho fijo para que todos los íconos estén alineados */
+    min-width: 20px;
+    text-align: left;
+    font-size: 1.2em;
+    margin: 0;
+    /* eliminar margen para que no desplace */
+}
+
+.sidebar-menu i.arrow {
+    font-size: 0.7em;
+    transition: transform var(--transition-speed);
+}
+
+.has-submenu.open .arrow {
+    transform: rotate(180deg);
+}
+
+.submenu {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 5px 0;
+    max-height: 0;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    transition: max-height 0.4s ease-out;
+}
+
+.has-submenu.open .submenu {
+    max-height: 200px;
+}
+
+.submenu li a {
+    padding: 10px 20px 10px 50px;
+    font-size: 0.95em;
+    color: var(--color-text-light);
+    opacity: 0.9;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.submenu li a:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    opacity: 1;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 0;
+    transition: margin-left var(--transition-speed);
+}
+
+.dashboard-container.menu-open .main-content {
+    margin-left: var(--sidebar-width);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 180px;
+    }
+
+    .sidebar-header h2 {
+        font-size: 1.5em;
+    }
+
+    .sidebar-logo {
+        max-width: 100px;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .dashboard-container.menu-open .main-content {
+        margin-left: 0;
+    }
+
+    .menu-toggle {
+        top: 15px;
+        left: 15px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .header h1 {
+        font-size: 2em;
+    }
+
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .header,
+    .content,
+    .footer {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 1.8em;
+    }
+
+    .header .subheading {
+        font-size: 1em;
+    }
+
+    .sidebar-menu a {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+
+    .submenu li a {
+        padding: 8px 15px 8px 40px;
+        font-size: 0.9em;
+    }
+}
+
+.header {
+    background: var(--color-white);
+    padding: 30px;
+    margin-bottom: 25px;
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--box-shadow-card);
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0 0 10px 0;
+    font-size: 2.5em;
+    color: var(--color-primary);
+}
+
+.header .subheading {
+    margin: 0;
+    font-size: 1.1em;
+    color: var(--color-secondary);
+}
+
+.content {
+    background: var(--color-white);
+    padding: 30px;
+    margin-bottom: 25px;
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--box-shadow-card);
+}
+
+.content h2 {
+    color: var(--color-primary);
+    margin-top: 0;
+    font-size: 1.8em;
+    border-bottom: 2px solid var(--color-light-blue);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.footer {
+    text-align: center;
+    background-color: var(--color-blue-dark);
+    color: var(--color-text-light);
+    padding: 20px;
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--box-shadow-card);
+    font-size: 0.9em;
+    margin-top: auto;
+}
+
+.user-role {
+    display: inline-block;
+    padding: 5px 12px;
+    margin-left: 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-role.admin {
+    background-color: var(--color-blue-dark);
+    color: var(--color-white);
+}
+
+.user-role.vendedor {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.summary-cards .card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.summary-cards .card:hover {
+    transform: translateY(-5px);
+}
+
+.summary-cards .card h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1em;
+}
+
+.summary-cards .card p {
+    font-size: 2em;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 0;
+}
+
+.statistics-section {
+    margin-top: 20px;
+    /* antes: 40px */
+    padding: 15px;
+    /* antes: 20px */
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    /* un poco más pequeño si lo deseas */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    /* suaviza la sombra */
+}
+
+.statistics-section h2 {
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.4em;
+}
+
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    align-items: start;
+}
+
+.chart-card {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 420px;
+    max-height: 550px;
+}
+
+.chart-card h3 {
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+#lowStockList {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#lowStockList li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    color: #666;
+    font-size: 1em;
+}
+
+#lowStockList li:last-child {
+    border-bottom: none;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 180px;
+    }
+
+    .sidebar-header h2 {
+        font-size: 1.5em;
+    }
+
+    .sidebar-logo {
+        max-width: 100px;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .dashboard-container.menu-open .main-content {
+        margin-left: 0;
+    }
+
+    .menu-toggle {
+        top: 15px;
+        left: 15px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .header h1 {
+        font-size: 2em;
+    }
+
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .header,
+    .content,
+    .footer {
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 1.8em;
+    }
+
+    .header .subheading {
+        font-size: 1em;
+    }
+
+    .sidebar-menu a {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+
+    .submenu li a {
+        padding: 8px 15px 8px 40px;
+        font-size: 0.9em;
+    }
+}
+
+.profile-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--box-shadow-card);
+}
+
+.profile-form .form-group {
+    margin-bottom: 20px;
+}
+
+.profile-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.profile-form input[type="text"],
+.profile-form input[type="email"],
+.profile-form input[type="tel"],
+.profile-form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.profile-form input[type="text"]:focus,
+.profile-form input[type="email"]:focus,
+.profile-form input[type="tel"]:focus,
+.profile-form input[type="password"]:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.profile-form .btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: auto;
+    display: block;
+    margin-top: 20px;
+}
+
+.profile-form .btn-primary:hover {
+    background-color: var(--color-blue-dark);
+    transform: translateY(-2px);
+}
+
+.profile-form h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #555;
+    font-size: 1.5em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.profile-form .text-muted {
+    font-size: 0.9em;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+/* Nuevos estilos para la sección de configuración (si se usa en un archivo separado) */
+.config-form {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--box-shadow-card);
+}
+
+.config-form .form-group {
+    margin-bottom: 20px;
+}
+
+.config-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.config-form input[type="text"],
+.config-form input[type="email"],
+.config-form input[type="url"],
+.config-form input[type="tel"],
+.config-form input[type="color"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.config-form input[type="text"]:focus,
+.config-form input[type="email"]:focus,
+.config-form input[type="url"]:focus,
+.config-form input[type="tel"]:focus,
+.config-form input[type="color"]:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.config-form .btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: auto;
+    display: block;
+    margin-top: 20px;
+}
+
+.config-form .btn-primary:hover {
+    background-color: var(--color-blue-dark);
+    transform: translateY(-2px);
+}
+
+.config-logo-preview {
+    max-width: 150px;
+    height: auto;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para checkboxes en config-form */
+.config-form .checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.config-form .checkbox-group input[type="checkbox"] {
+    width: auto;
+    /* Permite que el checkbox tenga su tamaño natural */
+    margin-right: 10px;
+    padding: 0;
+    box-sizing: content-box;
+    /* No añadir padding extra al checkbox */
+    transition: none;
+    /* Desactiva transiciones en el checkbox si no se desea */
+}
+
+.config-form .checkbox-group label {
+    margin-bottom: 0;
+    font-weight: normal;
+    color: var(--color-text-dark);
+    cursor: pointer;
+}
+
+.config-form .checkbox-group small {
+    display: block;
+    margin-left: 30px;
+    /* Alinea el small text con el label */
+    color: #666;
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+.header h1 {
+    font-size: 28px;
+    font-weight: 400;
+}
+
+.resumen {
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.main-content {
+    padding: 15px;
+}
+
+.header,
+.content,
+.footer {
+    padding: 20px;
+}
+
+.summary-cards {
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.summary-cards .card h3 {
+    font-size: 1em;
+}
+
+.summary-cards .card p {
+    font-size: 1.5em;
+}
+
+#CategoryChart {
+    max-width: 250px;
+    /* Ajusta según lo que desees */
+    margin: 0 auto;
+    /* Centrarlo si es necesario */
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.header-flex .resumen {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.header-flex .Bienvenida {
+    margin: 0;
+    font-size: 1.2em;
+    text-align: right;
+}
+
+.summary-cards .card h3 {
+    margin-top: 0;
+    margin-bottom: 6px;
+    /* Reducido (antes puede estar en 10px o más) */
+    font-size: 1em;
+    /* Puedes ajustar el tamaño también si deseas */
+    color: #333;
+}
+
+.summary-cards .card p {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.5em;
+    /* También puedes reducir si lo ves grande */
+    font-weight: bold;
+    color: #007bff;
+}
+
+.charts-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.chart-card {
+    max-width: 430px;
+    width: 100%;
+}
+
+.menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    /* más grande */
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+.hamburger-icon {
+    width: 30px;
+    /* aumentado */
+    height: 22px;
+    position: relative;
+    transform: rotate(0deg);
+    transition: .5s ease-in-out;
+    cursor: pointer;
+}
+
+.hamburger-icon .bar {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: var(--color-white);
+    border-radius: 9px;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+}
+
+.hamburger-icon .bar:nth-child(1) {
+    top: 0px;
+}
+
+.hamburger-icon .bar:nth-child(2) {
+    top: 9px;
+}
+
+.hamburger-icon .bar:nth-child(3) {
+    top: 18px;
+}
+
+/* Animación cuando se abre */
+.menu-toggle.open .hamburger-icon .bar:nth-child(1) {
+    top: 9px;
+    transform: rotate(135deg);
+}
+
+.menu-toggle.open .hamburger-icon .bar:nth-child(2) {
+    opacity: 0;
+    left: -60px;
+}
+
+.menu-toggle.open .hamburger-icon .bar:nth-child(3) {
+    top: 9px;
+    transform: rotate(-135deg);
+}
+
+.header-flex .resumen {
+    font-size: 1.8em;
+    margin: 0;
+    transition: margin-left 0.3s ease, font-size 0.3s ease;
+}
+
+/* Cuando el menú está cerrado, se le da margen para que no lo tape el botón */
+.dashboard-container:not(.menu-open) .header-flex .resumen {
+    margin-left: 70px;
+    /* Puedes ajustar el valor según el tamaño del botón */
+}
+
+.charts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.chart-card {
+    flex: 1;
+    min-width: 300px;
+    max-width: 32%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: 400px;
+    /* Altura fija para uniformidad */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chart-card canvas {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 300px;
+    /* puedes ajustar este valor */
+}
+
+.chart-card h3 {
+    margin-bottom: auto;
+    /* mantiene el título arriba */
+}
+
+.low-stock-list {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* ⬅️ centra hacia abajo si hay pocos */
+    overflow-y: auto;
+    gap: 8px;
+    padding-left: 0;
+    margin-top: 10px;
+    list-style: none;
+}
+
+.chart-card h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.low-stock-list {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* ⬆️ Fuerza que comience desde arriba */
+    align-items: center;
+    /* ⬅️➡️ Centrado horizontal */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 12px;
+    overflow-y: hidden;
+    /* Evita scroll */
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+
+.low-stock-list li {
+    background-color: #f5f5f5;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Que todos los .chart-card tengan el mismo alto */
+.chart-card {
+    height: 350px;
+    /* o el valor que uses en las gráficas */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-card h3 {
+    margin-bottom: 10px;
+}
+
+.charts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    /* espacio entre tarjetas */
+    justify-content: space-between;
+}
+
+.charts-container {
+    display: flex;
+    flex-wrap: nowrap;
+    /* ❗ nunca permitir salto de línea */
+    gap: 12px;
+    /* espaciado entre tarjetas */
+    overflow-x: auto;
+    /* ❗ permite deslizar si no caben */
+    padding-bottom: 10px;
+    scroll-behavior: smooth;
+}
+
+.flash-messages {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.alert {
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    font-size: 16px;
+    border-left: 6px solid;
+    background-color: #fff;
+}
+
+.alert-success {
+    border-color: #28a745;
+    color: #155724;
+}
+
+.alert-danger {
+    border-color: #dc3545;
+    color: #721c24;
+}
+
+.sidebar {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    /* Firefox */
+    scrollbar-color: white transparent;
+    /* thumb blanco, track invisible */
+}
+
+/* Scrollbar personalizado para Chrome, Edge y otros Webkit */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+    /* sin fondo ni bordes */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 8px;
+    border: none;
+}
+
+.sidebar {
+    padding-right: 0 !important;
+    border-right: none;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    /* Reduce el espacio entre imagen y texto */
+    padding: 1.5rem;
+    /* Puedes reducir si hay demasiado espacio interior */
+}
+
+.sidebar-logo {
+    width: 57px;
+    /* Ajusta según tu diseño */
+    height: 57px;
+    object-fit: contain;
+    margin: 0;
+    /* Asegura que no tenga margen adicional */
+}
+
+.sidebar-header h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    /* Elimina espacio extra arriba/abajo */
+}
+
+.filtro-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filtro-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #333;
+    font-size: 14px;
+}
+
+.filtro-group select,
+.filtro-group input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    width: 180px;
+    transition: border 0.2s ease;
+}
+
+.filtro-group select:focus,
+.filtro-group input:focus {
+    border-color: #007bff;
+}
+
+@media (max-width: 768px) {
+    .filtro-group {
+        width: 100%;
+    }
+
+    .filtro-group select,
+    .filtro-group input {
+        width: 100%;
+    }
+}
+
+.has-submenu .submenu {
+    display: none;
+    transition: all 0.3s ease;
+    padding-left: 15px;
+}
+
+.has-submenu.open .submenu {
+    display: block;
+}
+
+.dashboard-container {
+    margin-left: 4px;
+    /* Debe coincidir con el ancho del sidebar */
+    padding: 6px;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Iventary - Gestión de Roles</title>
+    <link
+      rel="icon"
+      href="{{url_for('static',filename='img/Inventory.png') }}"
+      type="image/png"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/usuario.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <a href="{{ url_for('dashboard.dashboard') }}" class="btn-volver">←</a>
+      <div class="titulo">Lista de Roles</div>
+    </header>
+    <main>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+              {% if category == 'rol' %}
+                <div class="alert alert-success">{{ message }}</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      <div class="tabla-container">
+        <table id="tablaRoles">
+          <thead>
+            <tr>
+              <th class="centrado">ID</th>
+              <th class="centrado">Nombre</th>
+              <th class="centrado">Descripción</th>
+              <th class="centrado">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for rol in roles %}
+            <tr>
+              <td class="centrado">{{ rol.id }}</td>
+              <td class="centrado">{{ rol.nombre }}</td>
+              <td class="centrado">{{ rol.descripcion }}</td>
+              <td class="centrado">{{ rol.estado }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="agregar-usuario-container">
+        <a href="{{ url_for('roles.agregar_rol') }}" class="btn-agregar-usuario"
+          >+ Crear Rol</a
+        >
+      </div>
+    </main>
+  </body>
+</html>

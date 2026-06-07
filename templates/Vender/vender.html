@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='img/Inventory.png') }}"
+      type="image/png"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/vender.css') }}"
+    />
+    <title>Inventary - Registrar Venta</title>
+  </head>
+  <body>
+    <header>
+      <a href="{{ url_for('dashboard.dashboard') }}" class="btn-volver">←</a>
+      <div class="titulo">Registrar Venta</div>
+    </header>
+    <main>
+      <div class="form-group busqueda">
+        <h3>Buscar Cliente</h3>
+        <input
+          type="text"
+          id="buscadorCliente"
+          placeholder="Buscar cliente..."
+        />
+      </div>
+
+      <div class="tabla-container">
+        <table id="tablaClientes">
+          <thead>
+            <tr>
+              <th class="centrado">Cédula</th>
+              <th class="centrado">Nombre</th>
+              <th class="centrado">Apellido</th>
+              <th class="centrado">Teléfono</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for c in clientes %}
+            <tr data-cedula="{{ c.cedula }}">
+              <td class="centrado">{{ c.cedula }}</td>
+              <td class="centrado">{{ c.nombre }}</td>
+              <td class="centrado">{{ c.apellido }}</td>
+              <td class="centrado">{{ c.telefono }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="form-group busqueda">
+        <h3>Buscar Productos</h3>
+        <input
+          type="text"
+          id="buscadorProducto"
+          placeholder="Buscar producto..."
+        />
+      </div>
+
+      <div class="tabla-container">
+        <table id="tablaProductos">
+          <thead>
+            <tr>
+              <th class="centrado">Producto</th>
+              <th class="centrado">Precio</th>
+              <th class="centrado">Stock</th>
+              <th class="centrado">Stock mínimo</th>
+              <th class="centrado">Imagen</th>
+              <th class="centrado">Cantidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in productos %}
+            <tr
+              data-id="{{ p.id }}"
+              class="{% if p.cantidad_stock <= p.stock_minimo %}stock-bajo{% endif %}"
+            >
+              <td class="centrado">{{ p.nombre }}</td>
+              <td class="centrado">${{ p.precio }}</td>
+              <td class="centrado">{{ p.cantidad_stock }}</td>
+              <td class="centrado">{{ p.stock_minimo }}</td>
+              <td>
+                {% if p.imagen_url %}
+                <img
+                  class="imagen-hover img-producto"
+                  src="{{ p.imagen_url}}"
+                  alt="imagen {{ p.nombre }}"
+                  width="40px"
+                  height="40px"
+                />
+                {% else %} Sin imagen {% endif %}
+              </td>
+              <td class="centrado">
+                <input
+                  type="number"
+                  name="cantidad_{{ p.id }}"
+                  min="1"
+                  value="0"
+                  disabled
+                />
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="agregar-producto-container">
+        <button id="btnRegistrar" class="btn-agregar-producto">
+          Registrar Venta
+        </button>
+      </div>
+      <p id="mensaje"></p>
+      <div id="alertaStockMinimo" class="modal-stock" style="display: none">
+        <div class="modal-contenido">
+          <h2>📦 Alerta de Stock Mínimo</h2>
+          <p>
+            Los siguientes productos están en o por debajo del nivel mínimo de
+            inventario:
+          </p>
+          <ul id="listaStockBajo"></ul>
+          <button onclick="cerrarAlertaStock()" class="btn-cerrar">
+            Entendido
+          </button>
+        </div>
+      </div>
+    </main>
+    <footer>© 2025 Inventary. Todos los derechos reservados.</footer>
+    <div id="modalImagen" class="modal-img">
+      <span class="close-modal">&times;</span>
+      <img id="imagenAmpliada" src="" alt="Imagen ampliada">
+    </div>
+    <script src="{{ url_for('static', filename='js/producto.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/venta.js') }}"></script>
+  </body>
+</html>

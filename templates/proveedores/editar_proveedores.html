@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inventary - Editar Proveedor</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/Inventory.png') }}" type="image/png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/categoria.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+  <header>
+    <button class="btn-volver" onclick="window.history.back()">←</button>
+    <div class="titulo">Editar Proveedor</div>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <form method="POST">
+        <!-- Nombre -->
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" name="nombre" id="nombre" value="{{ proveedor.nombre }}" required placeholder="Ej: Distribuciones XYZ">
+        </div>
+
+        <!-- Teléfono -->
+        <div class="form-group">
+          <label for="telefono">Teléfono:</label>
+          <input type="text" name="telefono" id="telefono" value="{{ proveedor.telefono }}" required placeholder="Ej: 3216549870">
+        </div>
+
+        <!-- Dirección -->
+        <div class="form-group">
+          <label for="direccion">Dirección:</label>
+          <input type="text" name="direccion" id="direccion" value="{{ proveedor.direccion }}" required placeholder="Ej: Av. Calle 45 #10-50, Bogotá">
+        </div>
+
+        <!-- Correo -->
+        <div class="form-group">
+          <label for="correo">Correo:</label>
+          <input type="email" name="correo" id="correo" value="{{ proveedor.correo }}" required placeholder="Ej: proveedor@email.com">
+        </div>
+
+        <!-- Botones -->
+        <div class="boton">
+          <button type="submit" class="btn-guardar">Guardar Cambios</button>
+        </div>
+        <div class="boton">
+          <a href="{{ url_for('proveedor.lista_proveedores') }}" class="btn-cancelar">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Inventary. Todos los derechos reservados.
+  </footer>
+
+</body>
+</html>

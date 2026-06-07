@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inventary - Editar Producto</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/Inventory.png') }}" type="image/png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/producto.css') }}">
+</head>
+<body>
+
+  <header>
+    <button class="btn-volver" onclick="window.history.back()">←</button>
+    <div class="titulo">Editar Producto</div>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <form method="POST">
+        <div class="form-group">
+          <label for="codigo">Codigo</label>
+          <input type="text" name="codigo" id="codigo" value="{{ producto.codigo_producto }}" required readonly>
+        </div>
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" name="nombre" id="nombre" value="{{ producto.nombre }}" required>
+        </div>
+        <div class="form-group">
+          <label for="precio">Precio:</label>
+          <input type="number" name="precio" id="precio" value="{{ producto.precio }}" required>
+        </div>
+        <div class="form-group">
+            <label>Categoría:</label>
+            <select name="categoria" required class="seleccionar">
+                <option value="">-- Seleccione categoría --</option>
+                {% for c in categorias %}
+                    <option value="{{ c.id }}" {% if producto and producto.categoria.id == c.id %}selected{% endif %}>{{ c.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+          <label for="cantidad_stock">Cantidad de Stock:</label>
+          <input type="number" name="cantidad_stock" id="cantidad_stock" value="{{ producto.cantidad_stock }}" required readonly>
+        </div>
+        <div class="form-group">
+          <label for="stock_minimo">Stock Minimo:</label>
+          <input type="number" name="stock_minimo" id="stock_minimo" value="{{ producto.stock_minimo }}" required>
+        </div>
+        <div class="form-group">
+            <label>Proveedor:</label>
+            <select name="proveedor" required class="seleccionar">
+                <option value="">-- Seleccione proveedor --</option>
+                {% for p in proveedores %}
+                    <option value="{{ p.id }}" {% if producto and producto.proveedor.id == p.id %}selected{% endif %}>{{ p.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+          <label>Imagen:</label>
+          <input type="text" name="imagen" value="{{ producto.imagen_url}}" placeholder="url de la imagen" title="url de la imagen">
+        </div>
+        <div class="boton">
+          <button type="submit" class="btn-guardar">Guardar Cambios</button>
+        </div>
+        <div class="boton">
+          <a href="{{ url_for('productos.productos') }}" class="btn-cancelar">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Inventary. Todos los derechos reservados.
+  </footer>
+
+</body>
+</html>
+

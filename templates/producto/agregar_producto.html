@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventary - Agregar Producto</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/Inventory.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/producto.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <button class="btn-volver" onclick="window.history.back()">←</button>
+        <div class="titulo">Agregar Producto</div>
+    </header>
+
+    <main>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+           <div class="flash-messages">
+             {% for category, message in messages %}
+               {% if category == 'aggproducto' %}
+                 <div class="alert alert-success">{{ message }}</div>
+               {% endif %}
+             {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        <div class="form-container">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="codigo">Nombre:</label>
+                    <input type="text" id="codigo" name="codigo" required placeholder="Codigo del producto" value="{{ producto.codigo_producto if producto else '' }}">
+                </div>
+                <!-- Nombre -->
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Nombre del producto" value="{{ producto.nombre if producto else '' }}">
+                </div>
+
+                <!-- Precio -->
+                <div class="form-group">
+                    <label for="precio">Precio:</label>
+                    <input type="number" step="0.01" id="precio" name="precio" required placeholder="Precio unitario" value="{{ producto.precio if producto else '' }}">
+                </div>
+
+                <!-- Categoría -->
+                <div class="form-group">
+                    <label for="categoria">Categoría:</label>
+                    <select id="categoria" name="categoria" required class="seleccionar">
+                        <option value="">Seleccione una categoría...</option>
+                        {% for c in categorias %}
+                            <option value="{{ c.id }}" {% if producto and producto.categoria_id == c.id %}selected{% endif %}>{{ c.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Cantidad en stock -->
+                <div class="form-group">
+                    <label for="cantidad_stock">Cantidad en stock:</label>
+                    <input type="number" id="cantidad_stock" name="cantidad_stock" required placeholder="Cantidad actual" value="{{ producto.cantidad_stock if producto else '' }}">
+                </div>
+
+                <!-- Stock mínimo -->
+                <div class="form-group">
+                    <label for="stock_minimo">Stock mínimo:</label>
+                    <input type="number" id="stock_minimo" name="stock_minimo" required placeholder="Nivel mínimo de stock" value="{{ producto.stock_minimo if producto else '' }}">
+                </div>
+
+                <!-- Proveedor -->
+                <div class="form-group">
+                    <label for="proveedor">Proveedor:</label>
+                    <select id="proveedor" name="proveedor" required class="seleccionar">
+                        <option value="">Seleccione un proveedor...</option>
+                        {% for p in proveedores %}
+                            <option value="{{ p.id }}" {% if producto and producto.id_proveedor == p.id %}selected{% endif %}>{{ p.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Imagen -->
+                <div class="form-group">
+                    <label for="imagen">Imagen:</label>
+                    <input type="text" id="imagen" name="imagen" placeholder="URL de la imagen (opcional)">
+                </div>
+
+                <!-- Botones -->
+                <div class="boton">
+                    <button type="submit" class="btn-guardar">Guardar Cambios</button>
+                </div>
+                <div class="boton">
+                    <a href="{{ url_for('productos.productos') }}" class="btn-cancelar">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        © 2025 Inventary. Todos los derechos reservados.
+    </footer>
+</body>
+</html>

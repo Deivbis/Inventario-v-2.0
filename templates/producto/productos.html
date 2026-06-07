@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="{{ url_for('static', filename='img/Inventory.png') }}" type="image/png" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/producto.css') }}" />
+    <title>Inventary - Lista de Productos</title>
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('dashboard.dashboard') }}" class="btn-volver">←</a>
+        <div class="titulo">Lista de Productos</div>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+            {% for category, message in messages %}
+                {% if category == 'producto' %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <div class="form-group busqueda">
+            <label for="busqueda">Buscar por nombre:</label>
+            <input class="nombre" type="text" id="busquedaProducto" onkeyup="filtrarProductos()" placeholder="Buscar por nombre..." />
+
+            <select id="filtroCategoria" onchange="filtrarProductos()">
+                <option value="">Todas las categorías</option>
+                {% for c in categorias %}
+                    <option value="{{ c.nombre }}">{{ c.nombre }}</option>
+                {% endfor %}
+            </select>
+            <select id="filtroProveedor" onchange="filtrarProductos()">
+                <option value="">Todos los proveedores</option>
+                {% for p in proveedores %}
+                    <option value="{{ p.nombre }}">{{ p.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="tabla-container">
+            <table id="tablaproductos">
+                <thead>
+                    <tr>
+                        <th class="centrado">Código</th>
+                        <th class="centrado">Nombre</th>
+                        <th class="centrado">Precio</th>
+                        <th class="centrado">Categoría</th>
+                        <th class="centrado">Stock</th>
+                        <th class="centrado">Stock Mínimo</th>
+                        <th class="centrado">Proveedor</th>
+                        <th class="centrado">Fecha de Registro</th>
+                        <th class="centrado">Imagen</th>
+                        {% if modo != 'solo_lectura' %}
+                        <th class="centrado">Acciones</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr class="{% if producto.cantidad_stock <= producto.stock_minimo %}stock-bajo{% endif %}">
+                        <td class="centrado">{{ producto.codigo_producto }}</td>
+                        <td class="centrado">{{ producto.nombre }}</td>
+                        <td class="centrado">${{ producto.precio }}</td>
+                        <td class="centrado">{{ producto.categoria.nombre }}</td>
+                        <td class="centrado">{{ producto.cantidad_stock }}</td>
+                        <td class="centrado">{{ producto.stock_minimo }}</td>
+                        <td class="centrado">{{ producto.proveedor.nombre }}</td>
+                        <td class="centrado">{{ producto.fecha_registro }}</td>
+                        <td>
+                            {% if producto.imagen_url %}
+                                <img class="imagen-hover img-producto"
+                                     src="{{ producto.imagen_url if producto.imagen_url.startswith('http') else url_for('static', filename='img/productos/' ~ producto.imagen_url) }}"
+                                     alt="imagen {{ producto.nombre }}"
+                                     width="40px" height="40px">
+                            {% else %}
+                                Sin imagen
+                            {% endif %}
+                        </td>
+                        {% if modo != 'solo_lectura' %}
+                        <td class="acciones">
+                            <a href="{{ url_for('productos.editar_producto', id=producto.id) }}" class="btn-editar centrado">
+                                <img src="{{ url_for('static', filename='img/editar.png') }}" alt="Editar" width="30" height="30" />
+                            </a>
+                            <a href="{{ url_for('productos.eliminar_producto', id=producto.id) }}" onclick="return confirm('¿Cambiar el estado del producto?')" class="btn-eliminar centrado">
+                                <img src="{{ url_for('static', filename='img/borrar.png') }}" alt="Eliminar" width="30" height="30" />
+                            </a>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if modo != 'solo_lectura' %}
+        <div class="agregar-producto-container">
+            <a href="{{ url_for('productos.agregar_producto') }}" class="btn-agregar-producto">+ Agregar Producto</a>
+        </div>
+        {% endif %}
+    </main>
+
+    <footer>© 2025 Inventary. Todos los derechos reservados.</footer>
+
+    <div id="modalImagen" class="modal-img">
+        <span class="close-modal">&times;</span>
+        <img id="imagenAmpliada" src="" alt="Imagen ampliada">
+    </div>
+
+    <script src="{{ url_for('static', filename='js/filtros.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/producto.js') }}"></script>
+</body>
+</html>

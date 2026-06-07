@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inventary - Editar Cliente</title>
+    <link
+      rel="icon"
+      href="{{url_for('static',filename='img/Inventory.png') }}"
+      type="image/png"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/clientes.css') }}"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <header>
+      <button class="btn-volver" onclick="window.history.back()">←</button>
+      <div class="titulo">Editar Cliente</div>
+    </header>
+    <main>
+      <div class="form-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for category, message in messages %}
+                {% if category == 'errorCliente' %}
+                  <div class="alert alert-danger">{{ message }}</div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        <form method="POST">
+          <div class="form-group">
+            <label for="cedula">Cedula:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="cedula"
+              name="cedula"
+              value="{{ cliente.cedula }}"
+              readonly
+            />
+          </div>
+          <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombre"
+              name="nombre"
+              value="{{ cliente.nombre }}"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="apellido">Apellido:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="apellido"
+              name="apellido"
+              value="{{ cliente.apellido }}"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="telefono">Teléfono:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="telefono"
+              value="{{ cliente.telefono }}"
+              name="telefono"
+            />
+          </div>
+          <div class="form-group">
+            <label for="correo">Correo Electrónico:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="correo"
+              name="correo"
+              value="{{ cliente.correo }}"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="direccion">Direccion:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="direccion"
+              name="direccion"
+              value="{{ cliente.direccion }}"
+              required
+            />
+          </div>
+          <div class="boton">
+            <button type="submit" class="btn-guardar">Guardar Cambio</button>
+          </div>
+          <div class="boton">
+            <a href="{{ url_for('cliente.lista_cliente') }}" class="btn-cancelar"
+              >Cancelar</a
+            >
+          </div>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

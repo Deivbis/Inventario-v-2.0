@@ -1,0 +1,454 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background-color: #f2f6fc;
+}
+
+header {
+  background-color: white;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 15px 15px;
+  position: relative;
+}
+
+.btn-volver {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background-color: #0d47a1;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px 14px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.btn-volver:hover {
+  background-color: #1565c0;
+}
+
+.titulo {
+  font-size: 2rem;
+  color: #0d47a1;
+  font-weight: bold;
+}
+
+main {
+  padding: 2rem;
+}
+
+.tabla-container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+thead {
+  background-color: #0d47a1;
+  color: white;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #e3f2fd;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: white;
+}
+
+a {
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.btn-editar {
+  color: #0d47a1;
+  font-weight: bold;
+}
+
+.btn-eliminar {
+  color: red;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  background-color: #0d47a1;
+  color: white;
+  padding: 1rem;
+  margin-top: 2rem;
+  border-radius: 10px;
+}
+
+.btn-editar, .btn-eliminar {
+  padding: 4px;
+  margin: 0 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.centrado {
+    text-align: center;
+}
+
+.agregar-producto-container {
+  text-align: center;
+  margin: 20px 40px;
+}
+
+.btn-agregar-producto{
+  background-color: #007bff;
+  color: white;
+  padding: 10px 18px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.btn-agregar-producto:hover {
+  background-color: #0056b3;
+}
+
+.form-container {
+  width: 60%;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 0 10px 0;
+  border: 1px solid #ccc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.btn-guardar {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-guardar:hover {
+  background-color: #218838;
+}
+
+.boton {
+  text-align: center; 
+}
+
+#busqueda {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.busqueda {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  text-align: center;
+}
+
+#busqueda {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+#busqueda:focus {
+  outline: none;
+  border-color: #007BFF;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+}
+
+.form-group select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.form-group .nombre,
+.form-group select {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 250px;
+    font-size: 14px;
+}
+
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group .seleccionar {
+  width: 100%;
+  padding: 10px 0 10px 0;
+  border: 1px solid #ccc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.imagen-hover {
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+  display: inline-block;
+}
+
+.imagen-hover:hover {
+  transform: scale(2.5);
+  position: relative;
+  z-index: 10;
+}
+
+
+td {
+  overflow: visible;
+  position: relative;
+}
+
+.imagen-hover {
+  mix-blend-mode: multiply; /* Se mezcla con el fondo */
+  background-color: transparent;
+}
+
+.producto-seleccionado {
+  background-color: #cce5ff !important; /* Azul claro */
+}
+
+.cliente-seleccionado {
+  background-color: #cce5ff !important;
+}
+
+.stock-bajo {
+  background-color: #f8d7da !important; /* Rojo claro */
+}
+
+/* Opcional: para que el texto siga siendo legible */
+.producto-seleccionado td,
+.cliente-seleccionado td {
+  color: #000;
+}
+
+.stock-bajo td {
+  color: #000;
+}
+
+.btn-agregar-producto{
+  background-color: #007bff;
+  color: white;
+  padding: 10px 18px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.modal-stock {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 10000;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.modal-contenido {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  animation: aparecer 0.3s ease-in-out;
+}
+
+.modal-contenido h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.modal-contenido p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.modal-contenido ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  text-align: left;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.modal-contenido ul li {
+  padding: 8px 12px;
+  border: 1px solid #eee;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 15px;
+  color: #333;
+}
+
+.btn-cerrar {
+  padding: 10px 20px;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-cerrar:hover {
+  background-color: #0b5ed7;
+}
+
+@keyframes aparecer {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.mensaje-exito {
+  background-color: #f1f6f9;
+  border-left: 5px solid #4CAF50;
+  color: #2e7d32;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.02);
+}
+
+.mensaje-exito a {
+  color: #2e7d32;
+  text-decoration: underline;
+  margin-left: 6px;
+}
+
+.btn-volver {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background-color: #0d47a1;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px 17px; /* más espacio interno */
+  font-size: 1.5rem;   /* más grande el icono o texto */
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-volver:hover {
+  background-color: #1565c0;
+  transform: scale(1.05); /* pequeño efecto al pasar el mouse */
+}
+
+.modal-img {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-img img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.modal-img .close-modal {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 36px;
+  color: white;
+  cursor: pointer;
+}

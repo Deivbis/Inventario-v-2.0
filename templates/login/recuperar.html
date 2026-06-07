@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventary - Recuperar Contraseña</title>
+  <link rel="icon" href="{{url_for('static', filename='img/Inventory.png')}}" type="image/png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/recuperar.css') }}">
+</head>
+<body>
+
+  <div class="container">
+    <form method="POST" id="recuperarForm" action="/cambiar-contraseña">
+      <h1>Restablecer Contraseña</h1>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            {% if category == 'Contraseña' %}
+              <div class="alert alert-success">{{ message }}</div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <input type="hidden" name="token" value="abc123">
+
+      <!-- Nueva contraseña -->
+      <div class="form-group password-wrapper">
+        <label for="nueva">Nueva contraseña:</label>
+        <input
+          type="password"
+          id="nueva"
+          name="nueva_contraseña"
+          required
+          minlength="8"
+          maxlength="15"
+          pattern="^(?=.*[A-Z])(?=.*\d).{8,15}$"
+          title="Debe contener al menos una mayúscula, un número, y entre 8 y 15 caracteres"
+          placeholder="Nueva contraseña"
+          autocomplete="new-password"
+        >
+        <button type="button" class="toggle-password" onclick="togglePassword('nueva')">👁️</button>
+      </div>
+
+      <!-- Confirmar contraseña -->
+      <div class="form-group password-wrapper">
+        <label for="confirmar">Confirmar contraseña:</label>
+        <input
+          type="password"
+          id="confirmar"
+          name="confirmar_contraseña"
+          required
+          minlength="8"
+          maxlength="15"
+          pattern="^(?=.*[A-Z])(?=.*\d).{8,15}$"
+          title="Debe contener al menos una mayúscula, un número, y entre 8 y 15 caracteres"
+          placeholder="Repite la contraseña"
+          autocomplete="new-password"
+        >
+        <button type="button" class="toggle-password" onclick="togglePassword('confirmar')">👁️</button>
+      </div>
+
+      <p id="error-msg" class="message error" style="display: none;">⚠ Las contraseñas no coinciden.</p>
+
+      <button type="submit">Actualizar Contraseña</button>
+    </form>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/recuperar.js') }}"></script>
+
+</body>
+</html>

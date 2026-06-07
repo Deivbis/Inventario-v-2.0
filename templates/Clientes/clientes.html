@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inventary - Gestion de Clientes</title>
+    <link
+      rel="icon"
+      href="{{url_for('static',filename='img/Inventory.png') }}"
+      type="image/png"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/clientes.css') }}"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <header>
+      <a href="{{ url_for('dashboard.dashboard') }}" class="btn-volver">←</a>
+      <div class="titulo">Lista de Clientes</div>
+    </header>
+    <main>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-messages">
+            {% for category, message in messages %}
+              {% if category == 'cliente' %}
+                <div class="alert alert-success">{{ message }}</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <div class="form-group busqueda">
+        <label for="busqueda">Buscar Cliente</label>
+        <input
+          class="nombre"
+          type="text"
+          id="busquedaCliente"
+          onkeyup="filtrarClientes()"
+          placeholder="Buscar Cliente..."
+        />
+      </div>
+      <div class="tabla-container">
+        <table id="tablaClientes">
+          <thead>
+            <tr>
+              <th class="centrado">Cedula</th>
+              <th class="centrado">Nombre</th>
+              <th class="centrado">Apellido</th>
+              <th class="centrado">Teléfono</th>
+              <th class="centrado">Correo</th>
+              <th class="centrado">Direccion</th>
+              <th class="centrado">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for cliente in clientes %}
+            <tr>
+              <td class="centrado">{{ cliente.cedula }}</td>
+              <td class="centrado">{{ cliente.nombre }}</td>
+              <td class="centrado">{{ cliente.apellido }}</td>
+              <td class="centrado">{{ cliente.telefono }}</td>
+              <td class="centrado">{{ cliente.correo }}</td>
+              <td class="centrado">{{ cliente.direccion }}</td>
+              <td class="centrado">
+                <a
+                  href="{{ url_for('cliente.editar_cliente', cedula=cliente.cedula) }}"
+                  class="btn-editar centrado"
+                  title="Editar"
+                >
+                  <img
+                    src="{{ url_for('static', filename='img/editar.png') }}"
+                    alt="Editar"
+                    width="30"
+                    height="30"
+                    class="centrado"
+                  />
+                </a>
+                <a
+                  href="{{ url_for('cliente.eliminar_cliente', cedula=cliente.cedula) }}"
+                  class="btn-eliminar centrado"
+                  title="Eliminar"
+                  onclick="return confirm('¿Estás seguro que deseas eliminar este cliente?');"
+                >
+                  <img
+                    src="{{ url_for('static', filename='img/borrar.png') }}"
+                    alt="Eliminar"
+                    width="30"
+                    height="30"
+                    class="centrado"
+                  />
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="agregar-cliente-container">
+        <a
+          href="{{ url_for('cliente.agregar_cliente') }}"
+          class="btn-agregar-cliente"
+          >+ Crear Cliente</a
+        >
+      </div>
+    </main>
+    <footer>© 2025 Inventary. Todos los derechos reservados.</footer>
+    <script src="{{ url_for('static', filename='js/filtros.js') }}"></script>
+  </body>
+</html>

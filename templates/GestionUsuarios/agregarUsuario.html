@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Crear Usuario</title>
+    <link
+      rel="icon"
+      href="{{url_for('static', filename='img/Inventory.png')}}"
+      type="image/png"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/usuario.css') }}"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <header>
+      <button class="btn-volver" onclick="window.history.back()">←</button>
+      <div class="titulo">Crear Usuario</div>
+    </header>
+
+    <main>
+      <div class="form-container">
+        <form method="POST">
+          <!-- Nombre -->
+          <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              class="form-control"
+              required
+              placeholder="Ej: Ana"
+              maxlength="100"
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Apellido -->
+          <div class="form-group">
+            <label for="apellido">Apellido:</label>
+            <input
+              type="text"
+              id="apellido"
+              name="apellido"
+              class="form-control"
+              required
+              placeholder="Ej: Martínez"
+              maxlength="100"
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Teléfono -->
+          <div class="form-group">
+            <label for="telefono">Teléfono:</label>
+            <input
+              type="tel"
+              id="telefono"
+              name="telefono"
+              class="form-control"
+              placeholder="Ej: 3201234567"
+              maxlength="15"
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Correo -->
+          <div class="form-group">
+            <label for="correo">Correo Electrónico:</label>
+            <input
+              type="email"
+              id="correo"
+              name="correo"
+              class="form-control"
+              required
+              placeholder="Ej: usuario@correo.com"
+              maxlength="100"
+              autocomplete="off"
+            />
+          </div>
+          <!-- Contraseña -->
+          <div class="form-group">
+            <label for="contraseña">Contraseña:</label>
+            <input
+              type="password"
+              id="contraseña"
+              name="contraseña"
+              class="form-control"
+              required
+              placeholder="Ingresa una contraseña segura"
+              minlength="6"
+              autocomplete="new-password"
+            />
+          </div>
+
+          <!-- Estado -->
+          <div class="form-group">
+            <label for="estado">Estado:</label>
+            <select class="seleccionar" id="estado" name="estado">
+              <option value="Activo">Activo</option>
+              <option value="Inactivo">Inactivo</option>
+            </select>
+          </div>
+
+          <!-- Rol -->
+          <div class="form-group">
+            <label for="id_rol">Rol:</label>
+            <select class="seleccionar" id="id_rol" name="id_rol" required>
+              {% for r in roles %}
+              <option value="{{ r.id }}">{{ r.nombre }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Botones -->
+          <div class="boton">
+            <button type="submit" class="btn-guardar">Crear Usuario</button>
+          </div>
+          <div class="boton">
+            <a href="{{ url_for('usuarios.lista_usuarios') }}" class="btn-cancelar"
+              >Cancelar</a
+            >
+          </div>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

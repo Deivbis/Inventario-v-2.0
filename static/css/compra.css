@@ -1,0 +1,212 @@
+body {
+  background-color: #f2f6fc;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: white;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 15px 15px;
+  position: relative;
+}
+
+.btn-volver {
+  position: absolute;
+  left: 20px;
+  font-size: 22px;
+  text-decoration: none;
+  color: white;
+  background-color: #0b3c85;
+  padding: 6px 12px;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.titulo {
+  font-size: 2rem;
+  color: #0d47a1;
+  font-weight: bold;
+}
+
+main {
+  max-width: 800px;
+  margin: 40px auto;
+  background-color: #fafafa;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+}
+
+.formulario .form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formulario label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.formulario input,
+.formulario select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.btn-registrar {
+  background-color: #2e7d32;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-registrar:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+footer {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 14px;
+  color: #777;
+}
+
+#mensaje-alerta {
+  margin-bottom: 20px;
+}
+
+.alert {
+  padding: 12px 18px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.titulo {
+  font-size: 26px;
+  font-weight: bold;
+  color: #0d47a1;
+  margin: 0 auto;
+  text-align: center;
+  flex: 1;
+}
+
+.botones {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.custom-flash {
+  background-color: white;
+  padding: 12px 20px;
+  margin: 20px auto;
+  border-radius: 12px;
+  max-width: 800px;
+  font-weight: 500;
+  font-size: 15px;
+  border-left: 6px solid;
+  color: #2e7d32; /* verde por defecto */
+  box-shadow: none;
+}
+
+/* Éxito (verde) */
+.custom-flash.success,
+.custom-flash.compra {
+  border-color: #2e7d32;
+  color: #2e7d32;
+}
+
+/* Error (rojo) */
+.custom-flash.error,
+.custom-flash.errorcompra,
+.custom-flash.danger {
+  border-color: #c62828;
+  color: #c62828;
+}
+
+/* Advertencia (amarillo) */
+.custom-flash.warning {
+  border-color: #ffc107;
+  color: #856404;
+}
+
+.custom-flash {
+  background-color: white;
+  padding: 12px 20px;
+  margin: 20px auto;
+  border-radius: 12px;
+  max-width: 800px;
+  font-weight: 500;
+  font-size: 15px;
+  border-left: 6px solid;
+  box-shadow: none;
+  transition: opacity 0.5s ease;
+}
+
+.custom-flash.compra {
+  border-color: #2e7d32;
+  color: #2e7d32;
+}
+
+.custom-flash.errorcompra,
+.custom-flash.danger {
+  border-color: #c62828;
+  color: #c62828;
+}
+
+.custom-flash.warning {
+  border-color: #f9a825;
+  color: #f9a825;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+
+.btn-volver {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background-color: #0d47a1;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 8px 13px; /* más espacio interno */
+  font-size: 1.5rem;   /* más grande el icono o texto */
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-volver:hover {
+  background-color: #1565c0;
+  transform: scale(1.05); /* pequeño efecto al pasar el mouse */
+}

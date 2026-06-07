@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='img/Inventory.png') }}"
+      type="image/png"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/categoria.css') }}"
+    />
+    <title>Inventary - Lista de Reportes</title>
+  </head>
+  <body>
+    <header>
+      <a href="{{ url_for('dashboard.dashboard') }}" class="btn-volver">←</a>
+      <div class="titulo">Lista de Reportes</div>
+    </header>
+
+    <main>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-messages">
+            {% for category, message in messages %}
+              {% if category == 'reporte' %}
+                <div class="alert alert-success">{{ message }}</div>
+              {% elif category == 'errorreporte' %}
+                <div class="alert alert-danger">{{ message }}</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <div class="form-group busqueda">
+        <label for="busqueda">Buscar por nombre:</label>
+        <input
+          type="text"
+          id="busqueda"
+          placeholder="Escribe un nombre..."
+          onkeyup="filtrarTabla()"
+        />
+      </div>
+
+      <div class="tabla-container">
+        {% if archivos %}
+        <table id="tablaReportes">
+          <thead>
+            <tr>
+              <th class="centrado">Nombre</th>
+              <th class="centrado">Fecha</th>
+              <th class="centrado">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for archivo in archivos %}
+            <tr>
+              <td class="centrado">{{ archivo.nombre }}</td>
+              <td class="centrado">{{ archivo.fecha }}</td>
+              <td class="centrado">
+                <a
+                  href="{{ url_for('reporte.abrir_reporte', filename=archivo.archivo_completo) }}"
+                  target="_blank"
+                  class="btn-editar"
+                  title="Abrir"
+                >
+                  <img
+                    src="{{ url_for('static', filename='img/abrir.png') }}"
+                    alt="Abrir"
+                    width="30"
+                    height="30"
+                  />
+                </a>
+                <form
+                  action="{{ url_for('reporte.borrar_reporte', filename=archivo.archivo_completo) }}"
+                  method="post"
+                  style="display: inline"
+                  onsubmit="return confirm('¿Seguro que quieres borrar este reporte?');"
+                >
+                  <button
+                    type="submit"
+                    class="btn-eliminar"
+                    title="Borrar"
+                    style="background: none; border: none; cursor: pointer"
+                  >
+                    <img
+                      src="{{ url_for('static', filename='img/borrar.png') }}"
+                      alt="Borrar"
+                      width="30"
+                      height="30"
+                    />
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p>No hay reportes generados.</p>
+        {% endif %}
+      </div>
+      <div class="agregar-categoria-container">
+        <a
+          href="{{ url_for('reporte.generar_reporte_pdf') }}"
+          class="btn-agregar-categoria"
+          >+ Generar nuevo reporte</a
+        >
+      </div>
+    </main>
+
+    <footer>© 2025 Inventary. Todos los derechos reservados.</footer>
+    <script src="{{ url_for('static', filename='js/filtros.js') }}"></script>
+  </body>
+</html>

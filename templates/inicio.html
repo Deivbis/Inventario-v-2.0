@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventary</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="icon" href="{{url_for('static',filename='img/Inventory.png') }}" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">
+            <img src="static/img/Inventory.png" alt="Inventary Logo">
+            <span>INVENTARY</span>
+        </a>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/" class="active">Inicio</a></li>
+                <li><a href="#contact-section">Contacto</a></li>
+                <li><a href="/login" class="login-button">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="main-content-text">
+            <h1>Gestiona tu inventario</h1>
+            <h2>La solución completa para tu negocio</h2>
+            <p>Nuestro sistema de gestión de inventario te permite controlar productos, proveedores, ventas y el stock de manera eficiente y centralizada.</p>
+            <a href="/login" class="start-button">Comenzar Ahora</a>
+        </div>
+        <div class="main-content-image">
+            <img src="static/img/Inventory.png" alt="Interfaz del sistema de inventario">
+        </div>
+    </main>
+
+    <section class="inventory-nav">
+        <h2>Explora las Funciones</h2>
+        <div class="inventory-grid">
+            <div class="inventory-card">
+                <i class="fas fa-box-open"></i> <h3>Gestión de Productos</h3>
+                <p>Administra tus productos, categorías y descripciones de forma detallada.</p>
+            </div>
+            <div class="inventory-card">
+                <i class="fas fa-warehouse"></i> <h3>Control de Stock</h3>
+                <p>Monitorea niveles de inventario en tiempo real y recibe alertas de stock bajo.</p>
+            </div>
+            <div class="inventory-card">
+                <i class="fas fa-truck"></i> <h3>Proveedores</h3>
+                <p>Lleva un registro de tus proveedores, sus datos y pedidos.</p>
+            </div>
+            <div class="inventory-card">
+                <i class="fas fa-chart-line"></i> <h3>Registro de Ventas</h3>
+                <p>Registra todas tus transacciones y genera informes de ventas.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact-section">
+        <div class="contact-content">
+            <h2>Contáctanos</h2>
+            <p>¿Tienes preguntas o quieres saber más sobre Inventary? ¡Estamos aquí para ayudarte!</p>
+            <div class="contact-details">
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:info@inventary.com">info@inventary.com</a></p>
+                <p><i class="fas fa-phone"></i> Teléfono: <a href="tel:+1234567890">+1 234 567 890</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> Dirección: Calle Ficticia 123, Ciudad Inventada, País</p>
+            </div>
+            <div class="social-links">
+                <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+                <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2025 Inventary. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

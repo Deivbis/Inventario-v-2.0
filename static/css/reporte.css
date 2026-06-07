@@ -1,0 +1,169 @@
+/* Reset y base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f1f5fb;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Encabezado */
+header {
+  background-color: white;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 15px 15px;
+  position: relative;
+}
+
+.titulo {
+  font-size: 2rem;
+  color: #0d47a1;
+  font-weight: bold;
+}
+.btn-volver {
+  position: absolute;
+  left: 20px;
+  font-size: 22px;
+  text-decoration: none;
+  color: white;
+  background-color: #0b3c85;
+  padding: 6px 12px;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.btn-volver:hover {
+  background-color: #0953ba;
+}
+
+/* Contenedor principal centrado */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Formulario */
+.formulario {
+  width: 100%;
+  max-width: 500px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.form-group input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+/* Botón */
+.botones {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-registrar {
+  background-color: #218838;
+  color: white;
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-registrar:hover {
+  background-color: #25963d;
+}
+
+/* Mensajes Flash */
+.custom-flash {
+  text-align: center;
+  padding: 12px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.custom-flash.reporte {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.custom-flash.errorReporte,
+.custom-flash.errordfecha {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.custom-flash.advertencia {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+/* Footer pegado abajo */
+footer {
+  background-color: #0b3c85;
+  color: white;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 14px;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9em;
+  margin-top: auto;
+  border-radius: 15px;
+}
+
+.btn-volver {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background-color: #0d47a1;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px 17px; /* más espacio interno */
+  font-size: 1.5rem;   /* más grande el icono o texto */
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-volver:hover {
+  background-color: #1565c0;
+  transform: scale(1.05); /* pequeño efecto al pasar el mouse */
+}

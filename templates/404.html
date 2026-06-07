@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Error 404 - Página no encontrada</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/error404.css') }}"
+    />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='img/Inventory.png') }}"
+      type="image/png"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>404</h1>
+      <h2>Página no encontrada</h2>
+      <p>Lo sentimos, la página que estás buscando no existe o fue movida.</p>
+      <a href="{{ url_for('dashboard.dashboard') }}">Volver al inicio</a>
+      <div>
+        <img
+          src="{{ url_for('static', filename='img/Inventory.png') }}"
+          alt="Logo"
+          class="logo"
+        />
+      </div>
+    </div>
+  </body>
+</html>

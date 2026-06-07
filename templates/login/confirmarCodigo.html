@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inventary - Confirmar Código</title>
+  <link rel="icon" href="{{url_for('static',filename='img/Inventory.png') }}" type="image/png">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/recuperar.css') }}">
+</head>
+<body>
+  <div class="container">
+    <form method="POST" action="/confirmar-codigo" id="confirmarForm">
+      <h1>Confirmar Código de Verificación</h1>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            {% if category in ['codigoEnviado', 'errorCodigo'] %}
+              <div class="alert alert-{{ 'success' if category == 'codigoEnviado' else 'danger' }}">{{ message }}</div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <div class="form-group">
+        <label for="email">Correo electrónico:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Correo electrónico"
+          required
+          autocomplete="email"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="codigo">Código de verificación:</label>
+        <input
+          type="text"
+          id="codigo"
+          name="codigo"
+          placeholder="Código de verificación"
+          required
+          maxlength="6"
+          pattern="^[0-9]{6}$"
+          title="Debe ser un código de 6 dígitos numéricos"
+        >
+      </div>
+
+      <button type="submit">Verificar</button>
+    </form>
+  </div>
+</body>
+</html>
