@@ -1,0 +1,43 @@
+# Entorno virtual
+
+venv/
+.venv/
+
+# Python
+
+**pycache**/
+*.py[cod]
+*$py.class
+
+# Variables de entorno
+
+.env
+
+# Flask
+
+instance/
+.flaskenv
+
+# VS Code
+
+.vscode/
+
+# PyCharm
+
+.idea/
+
+# Archivos temporales
+
+*.log
+*.tmp
+
+# PDFs generados
+
+facturas/*.pdf
+reportes/*.pdf
+historial/*.pdf
+
+# Archivos del sistema
+
+Thumbs.db
+.DS_Store
