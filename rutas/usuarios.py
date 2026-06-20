@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from werkzeug.security import generate_password_hash
 from modelo import RegistroUsuario, Rol, db
-from decorador import login_requerido
+from decorador import login_requerido, role_required
 from utils.utils import obtener_entidad_activa
 
 # Blueprint para las rutas de gestión de usuarios
@@ -10,6 +10,7 @@ usuario_bp = Blueprint('usuarios', __name__)
 # Ruta: Lista todos los usuarios registrados
 @usuario_bp.route('/gestion_usuarios')
 @login_requerido
+@role_required(['Administrador'])
 def lista_usuarios():
     usuarios = RegistroUsuario.query.all()  # Obtener todos los usuarios
     roles = Rol.query.all()  # Obtener todos los roles

@@ -44,6 +44,7 @@
           <h2>Inventary</h2>
         </div>
         <nav class="sidebar-menu">
+          {% set rol = session.get('rol_nombre') %}
           <ul>
             <li><a href="{{ url_for('dashboard.dashboard') }}"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
 

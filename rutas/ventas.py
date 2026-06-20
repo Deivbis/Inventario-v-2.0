@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, jsonify, redirect, render_template, request, session, url_for
 from modelo import Producto, Cliente, Venta, DetalleVenta, Movimiento, db
-from decorador import login_requerido
+from decorador import login_requerido, role_required
 from reports.pdf_utils import generar_factura_pdf
 from utils.utils import obtener_entidad_activa
 
@@ -10,6 +10,7 @@ ventas_bp = Blueprint('ventas', __name__)
 # Ruta para mostrar la página de ventas
 @ventas_bp.route('/vender', methods=['GET', 'POST'])
 @login_requerido
+@role_required(['Administrador','vendedor'])
 def vender():
     productos = Producto.query.filter_by(estado='Activo').all()
     clientes = Cliente.query.filter_by(estado='Activo').all()

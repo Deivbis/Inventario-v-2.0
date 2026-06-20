@@ -2,16 +2,17 @@ from datetime import datetime, timedelta
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from sqlalchemy import and_
 from modelo import Categoria, Venta, DetalleVenta, Cliente, Producto, db
-from decorador import login_requerido
+from decorador import login_requerido,role_required
 
 # Create blueprint for the dashboard module
 dashboard_bp = Blueprint('dashboard', __name__)
 
 @dashboard_bp.route('/dashboard')
 @login_requerido
+@role_required(['Administrador','vendedor','Supervisor','bodeguero'])
 def dashboard():
     # Check if the user has an active session with required data
-    if 'rol' not in session or 'nombre_usuario_mostrar' not in session or 'rol_nombre' not in session:
+    if 'id_rol' not in session or 'usuario_nombre_mostrar' not in session or 'rol_nombre' not in session:
         flash("Debes iniciar sesión para acceder al panel.", "login")
         return redirect(url_for('login.Login'))
 
@@ -85,18 +86,18 @@ def dashboard():
     }
 
     # Render dashboard based on user role
-    if session['rol'] == 1:  # Administrator
+    if session['id_rol'] == 1:  # Administrator
         return render_template(
             'Ventana_admin.html',
-            user_display_name=session['nombre_usuario_mostrar'],
+            user_display_name=session['usuario_nombre_mostrar'],
             user_role_name=session['rol_nombre'],
             stats=stats,
             config=dashboard_config
         )
-    elif session['rol'] == 2:  # Salesperson
+    elif session['id_rol'] == 2:  # Salesperson
         return render_template(
             'Ventana_vendedor.html',
-            user_display_name=session['nombre_usuario_mostrar'],
+            user_display_name=session['usuario_nombre_mostrar'],
             user_role_name=session['rol_nombre'],
             config=dashboard_config
         )

@@ -5,6 +5,7 @@ from flask import session, flash, redirect, url_for, abort
 def login_requerido(f):
     @wraps(f)
     def decorated(*args, **kwargs):
+        print("SESSION DECORADOR:", dict(session))
         if 'usuario_id' not in session:
             flash('You must be logged in to access this page.', 'warning')
             return redirect(url_for('login.Login'))

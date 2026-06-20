@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 import os
 from reports.pdf_utils import obtener_nombre_reporte, generar_pdf_inventario
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, send_from_directory, url_for
-from decorador import login_requerido
+from decorador import login_requerido, role_required
 from modelo import Producto, Venta, DetalleVenta, db
 
 # Blueprint for report-related routes
@@ -11,6 +11,7 @@ reporte_bp = Blueprint('reporte', __name__)
 # Route to generate general inventory report
 @reporte_bp.route('/reporte/inventario')
 @login_requerido
+@role_required(['Administrador','Supervisor'])
 def reporte_inventario():
     # Fetch active products and all sales data
     productos = Producto.query.filter_by(estado='Activo').all()
@@ -28,6 +29,7 @@ def reporte_inventario():
 # Route to list all PDF reports
 @reporte_bp.route('/reportes')
 @login_requerido
+@role_required(['Administrador','Supervisor'])
 def reportes():
     reportes_dir = os.path.join("static", "reportes")
     archivos = []
@@ -94,6 +96,7 @@ def productos_json():
 # Route to generate a custom PDF report between two dates
 @reporte_bp.route('/reporte-inventario', methods=['GET', 'POST'])
 @login_requerido
+@role_required(['Administrador','Supervisor'])
 def generar_reporte_pdf():
     if request.method == 'POST':
         # Get selected dates from form

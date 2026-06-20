@@ -28,7 +28,7 @@ def Login():
             session["rol_nombre"] = usuario.rol.nombre
             session["usuario_nombre_mostrar"] = usuario.nombre
 
-
+            print("SESSION LOGIN:", dict(session))
 
             flash("✅ Inicio de sesión exitoso.", "login")
             return redirect(url_for('dashboard.dashboard')) 
