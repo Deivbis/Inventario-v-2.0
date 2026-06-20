@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request
 from modelo import Producto, Categoria, Proveedor, db
-from decorador import login_requerido, role_required
+from decorador import login_requerido, permiso_requerido
 from utils.utils import obtener_entidad_activa
 
 # Create blueprint for product management
@@ -10,7 +10,7 @@ productos_bp = Blueprint('productos', __name__)
 @productos_bp.route('/productos')
 @productos_bp.route('/productos/<modo>')
 @login_requerido
-@role_required(['Administrador','Supervisor','Bodeguero'])
+@permiso_requerido("ver_productos")
 def productos(modo=None):
     productos = Producto.query.filter_by(estado='Activo').all()
     categorias = Categoria.query.all()
@@ -30,6 +30,7 @@ def productos(modo=None):
 # Add a new product
 @productos_bp.route('/producto/agregar', methods=['GET', 'POST'])
 @login_requerido
+@permiso_requerido("crear_productos")
 def agregar_producto():
     categorias = Categoria.query.all()
     proveedores = Proveedor.query.all()
