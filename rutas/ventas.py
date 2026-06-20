@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import Blueprint, jsonify, redirect, render_template, request, session, url_for
 from modelo import Producto, Cliente, Venta, DetalleVenta, Movimiento, db
 from decorador import login_requerido
-from pdf_utils import generar_factura_pdf
+from reports.pdf_utils import generar_factura_pdf
 from utils.utils import obtener_entidad_activa
 
 ventas_bp = Blueprint('ventas', __name__)

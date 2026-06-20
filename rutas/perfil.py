@@ -31,7 +31,7 @@ def mi_perfil():
                     flash('❌ Las contraseñas no coinciden.', 'perfil')
                     return render_template('perfil/editar_perfil.html', usuario=usuario_actual,
                                            user_display_name=session.get('nombre_usuario_mostrar'),
-                                           user_role_name=session.get('rol_display_name'))
+                                           user_role_name=session.get('rol_nombre'))
 
             # Check if email is already used by another user (excluding current user)
             email_duplicado = RegistroUsuario.query.filter(
@@ -43,7 +43,7 @@ def mi_perfil():
                 flash('❌ El correo electrónico ya está siendo usado por otro usuario.', 'perfil')
                 return render_template('perfil/editar_perfil.html', usuario=usuario_actual,
                                        user_display_name=session.get('nombre_usuario_mostrar'),
-                                       user_role_name=session.get('rol_display_name'))
+                                       user_role_name=session.get('rol_nombre'))
 
             db.session.commit()
             flash('✅ Perfil actualizado correctamente.', 'perfil')
@@ -59,4 +59,4 @@ def mi_perfil():
 
     return render_template('perfil/editar_perfil.html', usuario=usuario_actual,
                            user_display_name=session.get('nombre_usuario_mostrar'),
-                           user_role_name=session.get('rol_display_name'))
+                           user_role_name=session.get('rol_nombre'))

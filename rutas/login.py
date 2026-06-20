@@ -23,14 +23,12 @@ def Login():
             flash("🔑 Contraseña incorrecta.", "error")
         else:
             # Create session
-            session['usuario_id'] = usuario.id
-            session['rol'] = usuario.id_rol
-            session['nombre_usuario_mostrar'] = usuario.nombre
-            session['rol_display_name'] = (
-                "Administrador" if usuario.id_rol == 1 
-                else "Vendedor" if usuario.id_rol == 2 
-                else "Desconocido"
-            )
+            session["usuario_id"] = usuario.id
+            session["id_rol"] = usuario.id_rol
+            session["rol_nombre"] = usuario.rol.nombre
+            session["usuario_nombre_mostrar"] = usuario.nombre
+
+
 
             flash("✅ Inicio de sesión exitoso.", "login")
             return redirect(url_for('dashboard.dashboard')) 

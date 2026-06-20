@@ -11,7 +11,7 @@ dashboard_bp = Blueprint('dashboard', __name__)
 @login_requerido
 def dashboard():
     # Check if the user has an active session with required data
-    if 'rol' not in session or 'nombre_usuario_mostrar' not in session or 'rol_display_name' not in session:
+    if 'rol' not in session or 'nombre_usuario_mostrar' not in session or 'rol_nombre' not in session:
         flash("Debes iniciar sesión para acceder al panel.", "login")
         return redirect(url_for('login.Login'))
 
@@ -89,7 +89,7 @@ def dashboard():
         return render_template(
             'Ventana_admin.html',
             user_display_name=session['nombre_usuario_mostrar'],
-            user_role_name=session['rol_display_name'],
+            user_role_name=session['rol_nombre'],
             stats=stats,
             config=dashboard_config
         )
@@ -97,7 +97,7 @@ def dashboard():
         return render_template(
             'Ventana_vendedor.html',
             user_display_name=session['nombre_usuario_mostrar'],
-            user_role_name=session['rol_display_name'],
+            user_role_name=session['rol_nombre'],
             config=dashboard_config
         )
     else:

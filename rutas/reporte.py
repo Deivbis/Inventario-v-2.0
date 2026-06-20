@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 import os
-from pdf_utils import obtener_nombre_reporte, generar_pdf_inventario
+from reports.pdf_utils import obtener_nombre_reporte, generar_pdf_inventario
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, send_from_directory, url_for
 from decorador import login_requerido
 from modelo import Producto, Venta, DetalleVenta, db

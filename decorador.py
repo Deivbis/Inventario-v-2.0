@@ -16,7 +16,7 @@ def role_required(roles):
     def decorator(f):
         @wraps(f)
         def decorated(*args, **kwargs):
-            if 'rol_display_name' not in session or session['rol_display_name'] not in roles:
+            if 'rol_nombre' not in session or session['rol_nombre'] not in roles:
                 flash('You do not have permission to access this page.', 'danger')
                 abort(403)
             return f(*args, **kwargs)
