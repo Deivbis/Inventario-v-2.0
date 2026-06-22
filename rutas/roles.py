@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from modelo import Rol, db
-from decorador import login_requerido, role_required
+from decorators.auth import login_requerido, role_required
 
 # Blueprint para las rutas de gestión de roles
 roles_bp = Blueprint('roles', __name__)

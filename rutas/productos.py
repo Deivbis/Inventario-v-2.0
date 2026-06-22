@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request
 from modelo import Producto, Categoria, Proveedor, db
-from decorador import login_requerido, permiso_requerido
+from decorators.auth import login_requerido, permiso_requerido
 from utils.utils import obtener_entidad_activa
 
 # Create blueprint for product management
@@ -73,6 +73,7 @@ def agregar_producto():
 # Edit an existing product
 @productos_bp.route('/producto/editar/<int:id>', methods=['GET', 'POST'])
 @login_requerido
+@permiso_requerido("editar_productos")
 def editar_producto(id):
     producto = obtener_entidad_activa(Producto, id, "Producto")
     categorias = Categoria.query.all()
@@ -102,6 +103,7 @@ def editar_producto(id):
 # Soft-delete (deactivate) a product
 @productos_bp.route('/producto/eliminar/<int:id>', methods=['GET', 'POST'])
 @login_requerido
+@permiso_requerido("eliminar_productos")
 def eliminar_producto(id):
     producto = obtener_entidad_activa(Producto, id, "Producto")
     producto.estado = 'Inactivo'

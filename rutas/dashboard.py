@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from sqlalchemy import and_
 from modelo import Categoria, Venta, DetalleVenta, Cliente, Producto, db
-from decorador import login_requerido,role_required
+from decorators.auth import login_requerido,role_required
 
 # Create blueprint for the dashboard module
 dashboard_bp = Blueprint('dashboard', __name__)

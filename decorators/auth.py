@@ -1,6 +1,7 @@
 from functools import wraps
 from flask import session, flash, redirect, url_for, abort
 from modelo import RolPermiso, Permiso
+from services.tiene_permiso_service import tiene_permiso
 
 # Decorator to require user to be logged in
 def login_requerido(f):
@@ -24,21 +25,6 @@ def role_required(roles):
             return f(*args, **kwargs)
         return decorated
     return decorator
-
-def tiene_permiso(id_rol, nombre_permiso):
-
-    permiso = (
-        RolPermiso.query
-        .join(Permiso)
-        .filter(
-            RolPermiso.id_rol == id_rol,
-            Permiso.nombre == nombre_permiso,
-            RolPermiso.estado == "Activo"
-        )
-        .first()
-    )
-
-    return permiso is not None
 
 #Decorator to require user permiso to access a route
 def permiso_requerido(nombre_permiso):

@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from modelo import Cliente, db
-from decorador import login_requerido
+from decorators.auth import login_requerido
 from utils.utils import obtener_entidad_activa  # Utility function to fetch active entities
 
 cliente_bp = Blueprint('cliente', __name__)

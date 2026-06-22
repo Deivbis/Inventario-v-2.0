@@ -2,7 +2,7 @@ from datetime import datetime
 import os
 from werkzeug.utils import secure_filename
 from flask import Blueprint, abort, flash, redirect, render_template, send_from_directory, url_for, current_app
-from decorador import login_requerido
+from decorators.auth import login_requerido
 
 # Create blueprint for invoice-related routes
 factura_bp = Blueprint('factura', __name__)

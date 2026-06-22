@@ -51,9 +51,13 @@
             <li class="has-submenu">
               <a href="#" aria-expanded="false"><i class="fas fa-box-open"></i> <span>Gestión de Productos</span> <i class="fas fa-chevron-down arrow"></i></a>
               <ul class="submenu">
+                {% if tiene_permiso(session['id_rol'], 'ver_productos') %}
                 <li>
-                  <a href="{{ url_for('productos.productos', modo='solo_lectura') }}">Ver Productos</a>
+                    <a href="{{ url_for('productos.productos', modo='solo_lectura') }}">
+                        Ver Productos
+                    </a>
                 </li>
+                {% endif %}
                 <li>
                   <a href="{{ url_for('productos.productos', modo='gestion') }}">Gestionar Productos</a>
                 </li>

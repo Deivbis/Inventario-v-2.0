@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, jsonify, redirect, render_template, request, session, url_for
 from modelo import Producto, Cliente, Venta, DetalleVenta, Movimiento, db
-from decorador import login_requerido, role_required
+from decorators.auth import login_requerido, role_required
 from reports.pdf_utils import generar_factura_pdf
 from utils.utils import obtener_entidad_activa
 

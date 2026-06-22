@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request
 from modelo import Proveedor, db
-from decorador import login_requerido
+from decorators.auth import login_requerido
 from utils.utils import obtener_entidad_activa
 
 # Blueprint for managing suppliers
