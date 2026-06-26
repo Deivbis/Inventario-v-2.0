@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
-from modelo import Producto, Movimiento
-from decorators.auth import login_requerido
+from models import Producto, Movimiento
+from decorators import login_requerido
 
 # Create blueprint for product movement tracking
 movimiento_bp = Blueprint('movimiento', __name__)

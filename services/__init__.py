@@ -1,0 +1,1 @@
+from .tiene_permiso_service import tiene_permiso

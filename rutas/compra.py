@@ -1,7 +1,8 @@
 from datetime import datetime
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
-from modelo import Movimiento, Producto, db
-from decorators.auth import login_requerido
+from models import Movimiento, Producto
+from configs import db
+from decorators import login_requerido
 
 # Create blueprint for the purchase module
 compra_bp = Blueprint('compra', __name__)

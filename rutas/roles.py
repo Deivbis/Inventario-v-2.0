@@ -1,6 +1,7 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from modelo import Rol, db
-from decorators.auth import login_requerido, role_required
+from models import Rol
+from configs import db
+from decorators import login_requerido
 
 # Blueprint para las rutas de gestión de roles
 roles_bp = Blueprint('roles', __name__)
@@ -8,7 +9,6 @@ roles_bp = Blueprint('roles', __name__)
 # Ruta: Lista todos los roles
 @roles_bp.route('/roles')
 @login_requerido
-@role_required(['Administrador'])
 def lista_roles():
     # Consultar todos los roles desde la base de datos
     roles = Rol.query.all()

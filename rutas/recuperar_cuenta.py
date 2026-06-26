@@ -3,8 +3,9 @@ from random import randint
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from flask_mail import Message
 from werkzeug.security import generate_password_hash
-from extensiones import mail
-from modelo import RegistroUsuario, CambiarContraseña, db
+from configs.extensiones import mail
+from models import RegistroUsuario, CambiarContraseña
+from configs import db
 
 # Blueprint for password recovery process
 recuperar_bp = Blueprint('recuperar', __name__)

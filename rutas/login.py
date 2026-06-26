@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from werkzeug.security import check_password_hash
-from modelo import RegistroUsuario
+from models import RegistroUsuario
 
 # Create blueprint for login routes
 login_bp = Blueprint('login', __name__)

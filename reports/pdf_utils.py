@@ -3,7 +3,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.colors import HexColor, black
 import os
 from datetime import datetime
-from modelo import Producto
+from models import Producto
 
 def generar_pdf_inventario(productos, ventas_productos_agregados, detalle_ventas, path_archivo=None, tipo_reporte=None, fecha_inicio=None, fecha_fin=None):
     # Crear carpeta para reportes
@@ -163,7 +163,7 @@ def generar_factura_pdf(venta, cliente, detalles):
     from reportlab.lib.colors import HexColor, black
     from reportlab.pdfgen import canvas
     import os
-    from modelo import Producto
+    from models import Producto
 
     carpeta = os.path.join('static', 'facturas')
     os.makedirs(carpeta, exist_ok=True)

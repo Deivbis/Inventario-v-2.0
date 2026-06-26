@@ -1,6 +1,7 @@
 from flask import Blueprint, flash, redirect, render_template, request
-from modelo import Categoria, db
-from decorators.auth import login_requerido
+from models import Categoria
+from configs import db
+from decorators import login_requerido
 from utils.utils import obtener_entidad_activa  # Utility function to fetch active entities
 
 # Create blueprint for category management

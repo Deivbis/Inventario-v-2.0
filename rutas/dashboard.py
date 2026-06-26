@@ -1,15 +1,15 @@
 from datetime import datetime, timedelta
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from sqlalchemy import and_
-from modelo import Categoria, Venta, DetalleVenta, Cliente, Producto, db
-from decorators.auth import login_requerido,role_required
+from models import Categoria, Venta, Cliente, Producto
+from configs import db
+from decorators import login_requerido
 
 # Create blueprint for the dashboard module
 dashboard_bp = Blueprint('dashboard', __name__)
 
 @dashboard_bp.route('/dashboard')
 @login_requerido
-@role_required(['Administrador','vendedor','Supervisor','bodeguero'])
 def dashboard():
     # Check if the user has an active session with required data
     if 'id_rol' not in session or 'usuario_nombre_mostrar' not in session or 'rol_nombre' not in session:

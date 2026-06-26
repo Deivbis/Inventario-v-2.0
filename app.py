@@ -1,8 +1,8 @@
 from flask import Flask
 from configs.config import Config
-from extensiones import db, mail
+from configs import db,mail
 from rutas import blueprints  # import blueprint list
-from decorators.auth import tiene_permiso
+from services import tiene_permiso
 
 app = Flask(__name__)
 app.config.from_object(Config)

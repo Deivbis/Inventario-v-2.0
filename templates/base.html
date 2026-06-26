@@ -48,58 +48,120 @@
           <ul>
             <li><a href="{{ url_for('dashboard.dashboard') }}"><i class="fas fa-home"></i> <span>Inicio</span></a></li>
 
+            {% if tiene_permiso(session['id_rol'], 'ver_productos') or
+             tiene_permiso(session['id_rol'], 'registrar_compras') or
+             tiene_permiso(session['id_rol'], 'ver_proveedores') or
+             tiene_permiso(session['id_rol'], 'ver_categorias') or
+             tiene_permiso(session['id_rol'], 'crear_productos') or
+             tiene_permiso(session['id_rol'], 'editar_productos') or
+             tiene_permiso(session['id_rol'], 'eliminar_productos') or
+             tiene_permiso(session['id_rol'], 'ver_movimientos') %}
             <li class="has-submenu">
               <a href="#" aria-expanded="false"><i class="fas fa-box-open"></i> <span>Gestión de Productos</span> <i class="fas fa-chevron-down arrow"></i></a>
               <ul class="submenu">
+
                 {% if tiene_permiso(session['id_rol'], 'ver_productos') %}
                 <li>
-                    <a href="{{ url_for('productos.productos', modo='solo_lectura') }}">
-                        Ver Productos
-                    </a>
+                    <a href="{{ url_for('productos.productos', modo='solo_lectura') }}"> Ver Productos </a>
                 </li>
                 {% endif %}
+
+                {% if tiene_permiso(session['id_rol'], 'crear_productos') or
+                  tiene_permiso(session['id_rol'], 'editar_productos') or
+                  tiene_permiso(session['id_rol'], 'eliminar_productos') %}
                 <li>
                   <a href="{{ url_for('productos.productos', modo='gestion') }}">Gestionar Productos</a>
                 </li>
-                <li>
-                <li>
+                {% endif %}
+
+                {% if tiene_permiso(session['id_rol'], 'registrar_compras') %}
                 <li><a href="{{ url_for('compra.compra') }}">Comprar Producto</a></li>
+                {% endif %}
+
+                {% if tiene_permiso(session['id_rol'], 'ver_proveedores') %}
                 <li><a href="{{ url_for('proveedor.lista_proveedores') }}">Proveedores</a></li>
+                {% endif %}
+
+                {% if tiene_permiso(session['id_rol'], 'ver_categorias') %}
                 <li><a href="{{ url_for('categoria.lista_Categoria') }}">Categorías</a></li>
+                {% endif %}
+
+                {% if tiene_permiso(session['id_rol'], 'ver_movimientos') %}
                 <li><a href="{{ url_for('movimiento.lista_movimientos') }}">Movimientos</a></li>
+                {% endif %}
               </ul>
             </li>
+            {% endif %}
 
+            {% if tiene_permiso(session['id_rol'], 'ver_clientes') or
+             tiene_permiso(session['id_rol'], 'crear_clientes') %}
             <li class="has-submenu">
               <a href="#" aria-expanded="false"><i class="fas fa-users"></i> <span>Gestión de Clientes</span> <i class="fas fa-chevron-down arrow"></i></a>
               <ul class="submenu">
+
+                {% if tiene_permiso(session['id_rol'], 'ver_clientes') %}
                 <li><a href="{{ url_for('cliente.lista_cliente') }}">Lista de Clientes</a></li>
+                {% endif %}
+
+                {% if tiene_permiso(session['id_rol'], 'crear_clientes') %}
                 <li><a href="{{ url_for('cliente.agregar_cliente') }}">Agregar Cliente</a></li>
+                {% endif %}
               </ul>
             </li>
+            {% endif %}
 
+
+            {% if tiene_permiso(session['id_rol'], 'ver_usuarios') or
+              tiene_permiso(session['id_rol'], 'crear_usuarios') or
+              tiene_permiso(session['id_rol'], 'editar_usuarios') or 
+              tiene_permiso(session['id_rol'], 'ver_roles') or 
+              tiene_permiso(session['id_rol'], 'administrar_roles') %}
             <li class="has-submenu">
               <a href="#" aria-expanded="false"><i class="fas fa-user-shield"></i> <span>Usuarios y Roles</span> <i class="fas fa-chevron-down arrow"></i></a>
               <ul class="submenu">
+                
+                {% if tiene_permiso(session['id_rol'], 'ver_usuarios') or
+                 tiene_permiso(session['id_rol'], 'crear_usuarios') or
+                 tiene_permiso(session['id_rol'], 'editar_usuarios') %}
                 <li><a href="{{ url_for('usuarios.lista_usuarios') }}">Usuarios</a></li>
+                {% endif %}
+
+                {% if tiene_permiso(session['id_rol'], 'ver_roles') or
+                 tiene_permiso(session['id_rol'], 'administrar_roles') %}                
                 <li><a href="{{ url_for('roles.lista_roles') }}">Roles</a></li>
+                {% endif %}
               </ul>
             </li>
+            {% endif %}
 
+            {% if tiene_permiso(session['id_rol'], 'realizar_ventas') %}
             <li><a href="{{ url_for('ventas.vender') }}"><i class="fas fa-cash-register"></i> <span>Realizar Venta</span></a></li>
+            {% endif %}
+
+            {% if tiene_permiso(session['id_rol'], 'ver_movimientos') %}
             <li>
               <a href="{{ url_for('movimiento.lista_movimientos') }}"
                 ><i class="fas fa-cash-register"></i>
-                <span>Revisar Movimientos</span></a
-              >
+                <span>Revisar Movimientos</span></a>
             </li>
+            {% endif %}
+
+            {% if tiene_permiso(session['id_rol'], 'ver_ventas') or
+             tiene_permiso(session['id_rol'], 'ver_reportes') %}
             <li class="has-submenu">
               <a href="#" aria-expanded="false"><i class="fas fa-file-invoice"></i> <span>Facturas y Reportes</span> <i class="fas fa-chevron-down arrow"></i></a>
               <ul class="submenu">
+
+                {% if tiene_permiso(session['id_rol'], 'ver_ventas') %}
                 <li><a href="{{ url_for('factura.facturas') }}">Facturas</a></li>
+                {% endif %}
+
+                {% if tiene_permiso(session['id_rol'], 'ver_reportes') %}
                 <li><a href="{{ url_for('reporte.reportes') }}">Reportes</a></li>
+                {% endif %}
               </ul>
             </li>
+            {% endif %}
 
             <li><a href="{{ url_for('perfil.mi_perfil') }}"><i class="fas fa-user-circle"></i> <span>Mi Perfil</span></a></li>
             <li><a href="{{ url_for('logout.logout') }}"><i class="fas fa-sign-out-alt"></i> <span>Cerrar Sesión</span></a></li>

@@ -1,7 +1,8 @@
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from werkzeug.security import generate_password_hash
-from modelo import RegistroUsuario, db
-from decorators.auth import login_requerido
+from models import RegistroUsuario
+from configs import db
+from decorators import login_requerido
 
 # Create blueprint for user profile management
 perfil_bp = Blueprint('perfil', __name__)

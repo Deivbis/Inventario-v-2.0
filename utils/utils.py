@@ -1,5 +1,5 @@
 from flask import abort
-from modelo import db
+from configs import db
 
 def obtener_entidad_activa(modelo, id_entidad, nombre='Entidad'):
     entidad = db.session.get(modelo, id_entidad)

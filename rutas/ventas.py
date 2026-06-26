@@ -1,7 +1,8 @@
 from datetime import datetime
 from flask import Blueprint, jsonify, redirect, render_template, request, session, url_for
-from modelo import Producto, Cliente, Venta, DetalleVenta, Movimiento, db
-from decorators.auth import login_requerido, role_required
+from models import Producto, Cliente, Venta, DetalleVenta, Movimiento
+from configs import db
+from decorators import login_requerido
 from reports.pdf_utils import generar_factura_pdf
 from utils.utils import obtener_entidad_activa
 
@@ -10,7 +11,6 @@ ventas_bp = Blueprint('ventas', __name__)
 # Ruta para mostrar la página de ventas
 @ventas_bp.route('/vender', methods=['GET', 'POST'])
 @login_requerido
-@role_required(['Administrador','vendedor'])
 def vender():
     productos = Producto.query.filter_by(estado='Activo').all()
     clientes = Cliente.query.filter_by(estado='Activo').all()
@@ -31,13 +31,18 @@ def registrar_venta():
     cliente = Cliente.query.filter_by(cedula=cedula, estado='Activo').first()
     if not cliente:
         return jsonify(error="Cliente no encontrado."), 404
-
+    print("USUARIO EN SESION:", session.get("usuario_id"))
     try:
         nueva_venta = Venta(
             cedula_cliente=cliente.cedula,
+            usuario_id=session['usuario_id'],
+            subtotal=0,
+            descuento=0,
+            metodo_pago='Efectivo',
             fecha=datetime.now(),
-            total=0  # Se actualizará luego
-        )
+            total=0
+        )  # Se actualizará luego
+
         db.session.add(nueva_venta)
         db.session.flush()  # Obtener el ID antes del commit
 
@@ -69,13 +74,20 @@ def registrar_venta():
             )
             db.session.add(detalle)
 
-            # Descontar stock
+            # Registrar movimiento
+            stock_anterior = producto.cantidad_stock
+
             producto.cantidad_stock -= cantidad
 
-            # Registrar movimiento
+            stock_nuevo = producto.cantidad_stock
+
             movimiento = Movimiento(
                 tipo='Salida',
                 id_producto=producto.id,
+                registro_usuario_id=session['usuario_id'],
+                stock_anterior=stock_anterior,
+                stock_nuevo=stock_nuevo,
+                observacion='Venta registrada',
                 cantidad=cantidad,
                 motivo='Venta',
                 fecha=datetime.now()

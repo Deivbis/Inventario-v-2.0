@@ -1,4 +1,4 @@
-from modelo import Permiso, RolPermiso
+from models import Permiso, RolPermiso
 
 
 def tiene_permiso(id_rol, nombre_permiso):

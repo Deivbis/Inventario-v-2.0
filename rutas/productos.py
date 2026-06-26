@@ -1,6 +1,7 @@
 from flask import Blueprint, flash, redirect, render_template, request
-from modelo import Producto, Categoria, Proveedor, db
-from decorators.auth import login_requerido, permiso_requerido
+from models import Producto, Categoria, Proveedor
+from configs import db
+from decorators import login_requerido, permiso_requerido
 from utils.utils import obtener_entidad_activa
 
 # Create blueprint for product management
