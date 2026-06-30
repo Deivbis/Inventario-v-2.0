@@ -2,7 +2,7 @@ from flask import Blueprint, flash, redirect, render_template, request
 from models import Producto, Categoria, Proveedor
 from configs import db
 from decorators import login_requerido, permiso_requerido
-from utils.utils import obtener_entidad_activa
+from services.entidad_activa import obtener_entidad_activa
 
 # Create blueprint for product management
 productos_bp = Blueprint('productos', __name__)

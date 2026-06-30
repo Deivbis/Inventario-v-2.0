@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash
 from models import RegistroUsuario, Rol
 from configs import db
 from decorators import login_requerido
-from utils.utils import obtener_entidad_activa
+from services.entidad_activa import obtener_entidad_activa
 
 # Blueprint para las rutas de gestión de usuarios
 usuario_bp = Blueprint('usuarios', __name__)

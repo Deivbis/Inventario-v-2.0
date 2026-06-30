@@ -1,7 +1,7 @@
 from functools import wraps
 from flask import session, flash, redirect, url_for, abort
 from models import RolPermiso, Permiso
-from services.tiene_permiso_service import tiene_permiso
+from services import tiene_permiso
 
 # Decorator to require user to be logged in
 def login_requerido(f):

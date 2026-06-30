@@ -4,7 +4,7 @@ from models import Producto, Cliente, Venta, DetalleVenta, Movimiento
 from configs import db
 from decorators import login_requerido
 from reports.pdf_utils import generar_factura_pdf
-from utils.utils import obtener_entidad_activa
+from services.entidad_activa import obtener_entidad_activa
 
 ventas_bp = Blueprint('ventas', __name__)
 
