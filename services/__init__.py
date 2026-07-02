@@ -1,3 +1,3 @@
 from .tiene_permiso_service import tiene_permiso
 from .crud_service import guardar_entidad, editar_entidad, desactivar_entidad
-from .entidad_activa import obtener_entidad_activa, obtener_entidades_activas
+from .entidad_activa import obtener_entidad_activa, obtener_entidades_activas,obtener_entidad_por_campo

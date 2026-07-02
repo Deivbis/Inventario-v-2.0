@@ -16,3 +16,11 @@ def obtener_entidades_activas(modelo):
     except Exception as e:
         print(e)
         return None
+    
+def obtener_entidad_por_campo(modelo, campo, valor):
+    try:
+        entidad = modelo.query.filter_by(**{campo: valor}).first()
+        return entidad
+    except Exception as e:
+        print(e)
+        return None

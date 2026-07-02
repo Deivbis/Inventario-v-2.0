@@ -1,9 +1,9 @@
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from werkzeug.security import generate_password_hash
 from models import RegistroUsuario, Rol
-from configs import db
-from decorators import login_requerido
-from services.entidad_activa import obtener_entidad_activa
+from decorators import login_requerido, permiso_requerido
+from services import obtener_entidad_activa, obtener_entidades_activas, guardar_entidad, editar_entidad, desactivar_entidad, obtener_entidad_por_campo
+
 
 # Blueprint para las rutas de gestión de usuarios
 usuario_bp = Blueprint('usuarios', __name__)
@@ -11,58 +11,66 @@ usuario_bp = Blueprint('usuarios', __name__)
 # Ruta: Lista todos los usuarios registrados
 @usuario_bp.route('/gestion_usuarios')
 @login_requerido
+@permiso_requerido("ver_usuarios")
 def lista_usuarios():
-    usuarios = RegistroUsuario.query.all()  # Obtener todos los usuarios
-    roles = Rol.query.all()  # Obtener todos los roles
+    usuarios = obtener_entidades_activas(RegistroUsuario)
+    roles = obtener_entidades_activas(Rol)
+
+    if usuarios is None or roles is None:
+        return render_template('404.html')
+    
     estados_unicos = list(set([usuario.estado for usuario in usuarios]))  # Estados únicos (Activo/Inactivo)
     return render_template('GestionUsuarios/Usuarios.html', usuarios=usuarios, rol=roles, estados=estados_unicos)
 
 # Ruta: Crear un nuevo usuario (GET muestra formulario, POST lo procesa)
 @usuario_bp.route('/gestion_usuarios/crear_usuario', methods=['GET', 'POST'])
 @login_requerido
+@permiso_requerido("crear_usuarios")
 def crear_usuario():
-    roles = Rol.query.all()
+    roles = obtener_entidades_activas(Rol)
+
+    if roles is None:
+        return render_template('404.html')
+    
     if request.method == 'POST':
-        # Obtener datos del formulario
-        nombre = request.form['nombre']
-        apellido = request.form['apellido']
-        telefono = request.form['telefono']
+
         correo = request.form['correo']
-        usuario = request.form['usuario']
-        contraseña = request.form['contraseña']
-        estado = request.form['estado']
-        rol = int(request.form['id_rol'])
+        contrasena = request.form['contraseña']
+
+        nuevo_usuario = RegistroUsuario(nombre = request.form['nombre'],
+                                        apellido = request.form['apellido'],
+                                        telefono = request.form['telefono'],
+                                        correo = correo,
+                                        usuario = request.form['usuario'],
+                                        contraseña = generate_password_hash(contrasena, method='pbkdf2:sha256'),
+                                        estado = request.form['estado'],
+                                        id_rol = int(request.form['id_rol'])),
 
         # Verificar correo duplicado
-        if RegistroUsuario.query.filter_by(correo=correo).first():
+        if obtener_entidad_por_campo(RegistroUsuario, 'correo', correo):
             flash("⚠️ El correo electrónico ya está registrado.", "errorUsuario")
             return render_template('GestionUsuarios/agregarUsuario.html', roles=roles)
+        
+        resultado_crud = guardar_entidad(nuevo_usuario)
 
-        # Encriptar la contraseña
-        contraseña_hash = generate_password_hash(contraseña, method='pbkdf2:sha256')
-
-        # Crear nuevo usuario y guardar en la base de datos
-        nuevo_usuario = RegistroUsuario(
-            nombre=nombre, apellido=apellido, telefono=telefono,
-            correo=correo, usuario=usuario, contraseña=contraseña_hash,
-            estado=estado, id_rol=rol
-        )
-        db.session.add(nuevo_usuario)
-        db.session.commit()
-        flash("✅ Usuario creado correctamente.", "usuario")
-        return redirect(url_for('usuarios.lista_usuarios'))
+        if resultado_crud:
+            flash("✅ Usuario creado correctamente.", "usuario")
+            return redirect(url_for('usuarios.lista_usuarios'))
+        else:
+            flash("❌ Error al crear el usuario.", "errorUsuario")
 
     return render_template('GestionUsuarios/agregarUsuario.html', roles=roles)
 
 # Ruta: Editar un usuario existente
 @usuario_bp.route('/gestion_usuarios/editar/<int:id>', methods=['GET', 'POST'])
 @login_requerido
+@permiso_requerido("editar_usuarios")
 def editar_usuario(id):
     usuario = obtener_entidad_activa(RegistroUsuario, id, "RegistroUsuario")
-    roles = Rol.query.all()
+    roles = obtener_entidades_activas(Rol)
 
     if request.method == 'POST':
-        # Actualizar campos del usuario
+
         usuario.nombre = request.form['nombre']
         usuario.apellido = request.form['apellido']
         usuario.telefono = request.form['telefono']
@@ -84,20 +92,20 @@ def editar_usuario(id):
             flash("⚠️ Este correo ya está en uso por otro usuario.", "errorUsuario")
             return render_template('GestionUsuarios/editar_usuario.html', usuario=usuario, roles=roles)
 
-        # Intentar guardar los cambios
-        try:
-            db.session.commit()
-            flash("✅ Usuario actualizado correctamente.", "usuario")
+        resultado_crud = editar_entidad(usuario)
+
+        if resultado_crud:
+            flash("✅ Usuario editado correctamente.", "usuario")
             return redirect(url_for('usuarios.lista_usuarios'))
-        except Exception as e:
-            db.session.rollback()
-            flash(f"❌ Error al actualizar el usuario: {e}", "errorUsuario")
+        else:
+            flash("❌ Error al editar el usuario.", "errorUsuario")
 
     return render_template('GestionUsuarios/editar_usuario.html', usuario=usuario, roles=roles)
 
 # Ruta: Cambiar el estado del usuario (activo/inactivo)
 @usuario_bp.route('/gestion_usuarios/eliminar/<int:id>', methods=['GET', 'POST'])
 @login_requerido
+@permiso_requerido("eliminar_usuarios")
 def eliminar_usuario(id):
     usuario = obtener_entidad_activa(RegistroUsuario, id, "RegistroUsuario")
 
@@ -106,10 +114,10 @@ def eliminar_usuario(id):
         flash("❌ No puedes desactivar tu propia cuenta mientras estás conectado.", "usuario")
         return redirect(url_for('usuarios.lista_usuarios'))
 
-    # Cambiar estado entre 'Activo' e 'Inactivo'
-    usuario.estado = 'Inactivo' if usuario.estado == 'Activo' else 'Activo'
-    mensaje = "Usuario desactivado con éxito." if usuario.estado == 'Inactivo' else "Usuario activado con éxito."
+    resultado_crud = desactivar_entidad(usuario)
 
-    db.session.commit()
-    flash(f"✅ {mensaje}", "usuario")
-    return redirect(url_for('usuarios.lista_usuarios'))
+    if resultado_crud:
+        flash("✅ Usuario desactivado correctamente.", "usuario")
+        return redirect(url_for('usuarios.lista_usuarios'))
+    else:
+        flash("❌ Error al desactivar el usuario.", "usuario")

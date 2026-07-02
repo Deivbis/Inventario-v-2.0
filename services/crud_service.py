@@ -39,3 +39,4 @@ def desactivar_entidad (entidad):
         db.session.rollback()
         print(e)
         return False
+    
